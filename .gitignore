@@ -1,0 +1,7 @@
+Binaries/
+.vs/
+Build/
+DErivedDataCache/
+Intermediate/
+Plugins/
+Saved/
