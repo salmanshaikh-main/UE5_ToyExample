@@ -10,7 +10,6 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
-#include "Math/UnrealMathUtility.h"
 
 
 
@@ -126,12 +125,6 @@ void AThirdPersonCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
-void AThirdPersonCharacter::MoveCamera(float AxisValue)
-{
-	// Handle camera movement here using AxisValue
-	FVector Movement = FVector(0.f, AxisValue * 10.f, 0.f);
-	AddActorLocalOffset(Movement);
-}
 
 void AThirdPersonCharacter::MoveToPosition(FVector TargetLocation)
 {
@@ -176,9 +169,6 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 	// not move when vector at 0		
 	if (!Vector.IsZero())
 	{		
-		EInputActionValueType ActionValueType = EInputActionValueType::Axis2D;
-		FInputActionValue InputActionValue = FInputActionValue(ActionValueType, Vector);
-
 		MoveToPosition(Vector);
 	}
 
