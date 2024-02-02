@@ -73,11 +73,9 @@ void UScenario::DeserializeJsonFile(const FString& FilePath)
 					AutoMove Move;
 					Move.timestamp = (float)timestamp;
 					Move.duration = (float)duration;
-					FVector Vector;
-					Vector.X = x;
-					Vector.Y = y;
+					Move.Vector = FVector(x, y, 0);
 
-					UE_LOG(LogScenario, Log, TEXT("Add: {%f %f %f %f}"), Move.timestamp, Move.duration, Vector.X, Vector.Y);
+					UE_LOG(LogScenario, Log, TEXT("Add: {%f %f %f %f}"), Move.timestamp, Move.duration, Move.Vector.X, Move.Vector.Y);
 
 					Movements.Add(Move);
 

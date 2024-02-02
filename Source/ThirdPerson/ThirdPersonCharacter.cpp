@@ -10,6 +10,8 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Math/UnrealMathUtility.h"
+
 
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -51,8 +53,6 @@ AThirdPersonCharacter::AThirdPersonCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
 
 void AThirdPersonCharacter::BeginPlay()
@@ -118,8 +118,30 @@ void AThirdPersonCharacter::Move(const FInputActionValue& Value)
 		// add movement 
 		AddMovementInput(ForwardDirection, MovementVector.Y);
 		AddMovementInput(RightDirection, MovementVector.X);
+
+		FVector PlayerLocation = GetActorLocation();
+
+
+		UE_LOG(LogTemplateCharacter, Verbose, TEXT("Applying Movement: %f, %f, PLayer Location: %f %f"), MovementVector.X, MovementVector.Y, PlayerLocation.X, PlayerLocation.Y);
 	}
 }
+
+void AThirdPersonCharacter::MoveCamera(float AxisValue)
+{
+	// Handle camera movement here using AxisValue
+	FVector Movement = FVector(0.f, AxisValue * 10.f, 0.f);
+	AddActorLocalOffset(Movement);
+}
+
+void AThirdPersonCharacter::MoveToPosition(FVector TargetLocation)
+{
+	FVector Direction = TargetLocation - GetActorLocation();
+	Direction.Normalize();
+	AddMovementInput(Direction);
+	CameraBoom->SetWorldLocation(GetActorLocation()); // not realy sure for the camera, look into cameraboom if we want somthing specific for the cam
+	UE_LOG(LogTemplateCharacter, Log, TEXT("Auto Move to position: %f %f %f"), Direction.X, Direction.Y, Direction.Z);
+}
+
 
 void AThirdPersonCharacter::Look(const FInputActionValue& Value)
 {
@@ -151,14 +173,14 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 	FVector Vector;
 	Vector = Scenario.GetMove(timeSeconds);
 
-	// add something to not move when vector at 0		
+	// not move when vector at 0		
 	if (!Vector.IsZero())
-	{
+	{		
 		EInputActionValueType ActionValueType = EInputActionValueType::Axis2D;
 		FInputActionValue InputActionValue = FInputActionValue(ActionValueType, Vector);
 
-		//Move(InputActionValue);
+		MoveToPosition(Vector);
 	}
 
-
+	
 }
