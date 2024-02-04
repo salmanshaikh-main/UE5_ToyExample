@@ -10,6 +10,12 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Dom/JsonObject.h"
+#include "Serialization/JsonWriter.h"
+#include "Serialization/JsonSerializer.h"
+#include "Misc/FileHelper.h"
+#include <iostream>
+#include <fstream>  
 
 
 
@@ -120,8 +126,9 @@ void AThirdPersonCharacter::Move(const FInputActionValue& Value)
 
 		FVector PlayerLocation = GetActorLocation();
 
-
-		UE_LOG(LogTemplateCharacter, Verbose, TEXT("Applying Movement: %f, %f, PLayer Location: %f %f"), MovementVector.X, MovementVector.Y, PlayerLocation.X, PlayerLocation.Y);
+		// Write movement data to JSON file
+        WriteMovementDataToJson(MovementVector, PlayerLocation);
+		//UE_LOG(LogTemplateCharacter, Log, TEXT("Applying Movement: %f, %f, PLayer Location: %f %f"), MovementVector.X, MovementVector.Y, PlayerLocation.X, PlayerLocation.Y);
 	}
 }
 
@@ -173,4 +180,72 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 	}
 
 	
+}
+
+void AThirdPersonCharacter::WriteMovementDataToJson(const FVector2D& MovementVector, const FVector& PlayerLocation)
+{
+    // Create a JSON object to store movement data
+    TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
+
+    // Add movement data to the JSON object
+    JsonObject->SetNumberField(TEXT("MovementVectorX"), MovementVector.X);
+    JsonObject->SetNumberField(TEXT("MovementVectorY"), MovementVector.Y);
+    JsonObject->SetNumberField(TEXT("PlayerLocationX"), PlayerLocation.X);
+    JsonObject->SetNumberField(TEXT("PlayerLocationY"), PlayerLocation.Y);
+
+    // Convert JSON object to string
+    FString JsonString;
+    TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&JsonString);
+    FJsonSerializer::Serialize(JsonObject.ToSharedRef(), JsonWriter);
+
+	UE_LOG(LogTemplateCharacter, Log, TEXT("JSON String: %s"), *JsonString);
+
+	// Write the JSON string to a file
+	FString FilePath = FPaths::ProjectDir() + TEXT("MovementData.json");
+
+	std::ofstream MyFile("logs.txt", std::ios::app);
+  	MyFile << "test";
+	MyFile.close();
+
+	// Check if the file exists
+	if (FPaths::FileExists(FilePath))
+	{
+		// Load existing content
+		FString ExistingContent;
+		FFileHelper::LoadFileToString(ExistingContent, *FilePath);
+
+		// Append the new JSON string
+		ExistingContent += JsonString;
+
+		// Save the updated content back to the file
+		bool bSaved = FFileHelper::SaveStringToFile(ExistingContent, *FilePath);
+
+		if (bSaved)
+		{
+			// File saved successfully
+			UE_LOG(LogTemp, Warning, TEXT("JSON file updated and saved successfully at: %s"), *FilePath);
+		}
+		else
+		{
+			// Failed to save the updated file
+			UE_LOG(LogTemp, Error, TEXT("Failed to update JSON file at: %s"), *FilePath);
+		}
+	}
+	else
+	{
+		// File doesn't exist, create a new file and add content
+		bool bSaved = FFileHelper::SaveStringToFile(JsonString, *FilePath);
+
+		if (bSaved)
+		{
+			// File created and saved successfully
+			UE_LOG(LogTemp, Warning, TEXT("JSON file created and saved successfully at: %s"), *FilePath);
+		}
+		else
+		{
+			// Failed to create and save the file
+			UE_LOG(LogTemp, Error, TEXT("Failed to create JSON file at: %s"), *FilePath);
+		}
+	}
+
 }
