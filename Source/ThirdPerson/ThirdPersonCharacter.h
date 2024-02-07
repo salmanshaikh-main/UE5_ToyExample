@@ -58,7 +58,7 @@ protected:
 	/** Get the movement scenario from Cli args */
 	void GetMovementScenario();
 
-	void WriteMovementDataToJson(const FVector2D& MovementVector, const FVector& PlayerLocation);
+	void WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double Time, uint64 FrameNumber);
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);

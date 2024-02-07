@@ -2,6 +2,7 @@
 
 #include "ThirdPersonCharacter.h"
 #include "Engine/LocalPlayer.h"
+#include "Engine/Engine.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -15,11 +16,17 @@
 #include "Serialization/JsonSerializer.h"
 #include "Misc/FileHelper.h"
 #include <iostream>
-#include <fstream>  
+#include <fstream> 
+#include "Misc/DateTime.h"
+#include "Kismet/KismetSystemLibrary.h" 
 
 
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
+FString FullServerFilePath;
+FString FullClientFilePath;
+FString ServerPath;
+FString ClientPath;
 
 //////////////////////////////////////////////////////////////////////////
 // AThirdPersonCharacter
@@ -77,6 +84,18 @@ void AThirdPersonCharacter::BeginPlay()
 	// Init the Scenario
 	Scenario.InitializeScenarioFromArgs();
 
+	FString CurrentTime = FDateTime::Now().ToString(TEXT("%H:%M:%S"));
+
+	if(HasAuthority()){
+		if (FParse::Value(FCommandLine::Get(), TEXT("ServerLog="), ServerPath, true)){
+			FullServerFilePath = FPaths::Combine(TEXT("../../Logs/"), ServerPath + TEXT("_") + CurrentTime + TEXT(".txt"));
+		}
+	}
+	else{
+		if (FParse::Value(FCommandLine::Get(), TEXT("ClientLog="), ClientPath, true)){
+			FullClientFilePath = FPaths::Combine(TEXT("../../Logs/"), ClientPath + TEXT("_") + CurrentTime + TEXT(".txt"));
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -126,8 +145,6 @@ void AThirdPersonCharacter::Move(const FInputActionValue& Value)
 
 		FVector PlayerLocation = GetActorLocation();
 
-		// Write movement data to JSON file
-        WriteMovementDataToJson(MovementVector, PlayerLocation);
 		//UE_LOG(LogTemplateCharacter, Log, TEXT("Applying Movement: %f, %f, PLayer Location: %f %f"), MovementVector.X, MovementVector.Y, PlayerLocation.X, PlayerLocation.Y);
 	}
 }
@@ -160,15 +177,28 @@ void AThirdPersonCharacter::Look(const FInputActionValue& Value)
 void AThirdPersonCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
+	uint64 CurrentFrameNumber = GFrameCounter;
+
 	UWorld* World = GetWorld();
+	FVector PlayerLocation = GetActorLocation();
+
 	double timeSeconds;
+	
 	if (World)
 	{
 		timeSeconds = World->GetTimeSeconds();
+		
+		if(HasAuthority())
+		{
+			WriteMovementDataToJson(FullServerFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber);
+		}
+		else{
+			WriteMovementDataToJson(FullClientFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber);
+		}
 	}
 	else return;
-
+	
 	// auto moves
 	FVector Vector;
 	Vector = Scenario.GetMove(timeSeconds);
@@ -178,74 +208,25 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 	{		
 		MoveToPosition(Vector);
 	}
-
-	
 }
 
-void AThirdPersonCharacter::WriteMovementDataToJson(const FVector2D& MovementVector, const FVector& PlayerLocation)
+void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double TimeSeconds, uint64 FrameNumber)
 {
     // Create a JSON object to store movement data
     TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
 
     // Add movement data to the JSON object
-    JsonObject->SetNumberField(TEXT("MovementVectorX"), MovementVector.X);
-    JsonObject->SetNumberField(TEXT("MovementVectorY"), MovementVector.Y);
     JsonObject->SetNumberField(TEXT("PlayerLocationX"), PlayerLocation.X);
     JsonObject->SetNumberField(TEXT("PlayerLocationY"), PlayerLocation.Y);
-
+    JsonObject->SetNumberField(TEXT("Time"), TimeSeconds);
+    JsonObject->SetNumberField(TEXT("FrameNumber"), FrameNumber);
     // Convert JSON object to string
     FString JsonString;
     TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&JsonString);
     FJsonSerializer::Serialize(JsonObject.ToSharedRef(), JsonWriter);
 
-	UE_LOG(LogTemplateCharacter, Log, TEXT("JSON String: %s"), *JsonString);
-
-	// Write the JSON string to a file
-	FString FilePath = FPaths::ProjectDir() + TEXT("MovementData.json");
-
-	std::ofstream MyFile("logs.txt", std::ios::app);
-  	MyFile << "test";
-	MyFile.close();
-
-	// Check if the file exists
-	if (FPaths::FileExists(FilePath))
-	{
-		// Load existing content
-		FString ExistingContent;
-		FFileHelper::LoadFileToString(ExistingContent, *FilePath);
-
-		// Append the new JSON string
-		ExistingContent += JsonString;
-
-		// Save the updated content back to the file
-		bool bSaved = FFileHelper::SaveStringToFile(ExistingContent, *FilePath);
-
-		if (bSaved)
-		{
-			// File saved successfully
-			UE_LOG(LogTemp, Warning, TEXT("JSON file updated and saved successfully at: %s"), *FilePath);
-		}
-		else
-		{
-			// Failed to save the updated file
-			UE_LOG(LogTemp, Error, TEXT("Failed to update JSON file at: %s"), *FilePath);
-		}
-	}
-	else
-	{
-		// File doesn't exist, create a new file and add content
-		bool bSaved = FFileHelper::SaveStringToFile(JsonString, *FilePath);
-
-		if (bSaved)
-		{
-			// File created and saved successfully
-			UE_LOG(LogTemp, Warning, TEXT("JSON file created and saved successfully at: %s"), *FilePath);
-		}
-		else
-		{
-			// Failed to create and save the file
-			UE_LOG(LogTemp, Error, TEXT("Failed to create JSON file at: %s"), *FilePath);
-		}
-	}
-
+    // Write the JSON string to the file
+    std::ofstream MyFile(TCHAR_TO_UTF8(*FilePath), std::ios::app);
+    MyFile << TCHAR_TO_UTF8(*JsonString);
+    MyFile.close();
 }
