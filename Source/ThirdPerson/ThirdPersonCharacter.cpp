@@ -196,7 +196,7 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 		auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(durationSinceEpoch);
 		long long int time = nanoseconds.count();
 
-		UE_LOG(LogTemplateCharacter, Log, TEXT("time: %lld"), currentTime);
+		UE_LOG(LogTemplateCharacter, Verbose, TEXT("time: %lld"), currentTime);
 
 		if (HasAuthority())
 		{
