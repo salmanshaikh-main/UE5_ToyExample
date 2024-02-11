@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "ThirdPersonCharacter.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/Engine.h"
@@ -17,6 +15,8 @@
 #include "Misc/FileHelper.h"
 #include <iostream>
 #include <fstream> 
+#include <ctime>
+#include <chrono>
 #include "Misc/DateTime.h"
 #include "Kismet/KismetSystemLibrary.h" 
 
@@ -36,7 +36,7 @@ AThirdPersonCharacter::AThirdPersonCharacter()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-		
+
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -87,13 +87,13 @@ void AThirdPersonCharacter::BeginPlay()
 
 	FString CurrentTime = FDateTime::Now().ToString(TEXT("%H:%M:%S"));
 
-	if(HasAuthority()){
-		if (FParse::Value(FCommandLine::Get(), TEXT("ServerLog="), ServerPath, true)){
+	if (HasAuthority()) {
+		if (FParse::Value(FCommandLine::Get(), TEXT("ServerLog="), ServerPath, true)) {
 			FullServerFilePath = FPaths::Combine(TEXT("../../Logs/"), ServerPath + TEXT("_") + CurrentTime + TEXT(".txt"));
 		}
 	}
-	else{
-		if (FParse::Value(FCommandLine::Get(), TEXT("ClientLog="), ClientPath, true)){
+	else {
+		if (FParse::Value(FCommandLine::Get(), TEXT("ClientLog="), ClientPath, true)) {
 			FullClientFilePath = FPaths::Combine(TEXT("../../Logs/"), ClientPath + TEXT("_") + CurrentTime + TEXT(".txt"));
 		}
 	}
@@ -106,7 +106,7 @@ void AThirdPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 {
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
+
 		// Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
@@ -136,7 +136,7 @@ void AThirdPersonCharacter::Move(const FInputActionValue& Value)
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	
+
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
@@ -179,14 +179,6 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	uint32 FPS = 1.0f/ DeltaTime;
-	if(HasAuthority()){
-		UE_LOG(LogTemplateCharacter, Log, TEXT("Server FPS: %d"), FPS);
-	}
-	else{
-		UE_LOG(LogTemplateCharacter, Log, TEXT("Client FPS: %d"), ClientFixedFPS);
-	
-	}
 	uint64 CurrentFrameNumber = GFrameCounter;
 
 	UWorld* World = GetWorld();
@@ -194,50 +186,59 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 
 	double timeSeconds;
 	
+
 	if (World)
 	{
 		timeSeconds = World->GetTimeSeconds();
-		
-		if(HasAuthority())
+
+		auto currentTime = std::chrono::system_clock::now();
+		auto durationSinceEpoch = currentTime.time_since_epoch();
+		auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(durationSinceEpoch);
+		long long int time = nanoseconds.count();
+
+		UE_LOG(LogTemplateCharacter, Log, TEXT("time: %lld"), currentTime);
+
+		if (HasAuthority())
 		{
-			WriteMovementDataToJson(FullServerFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber);
+			WriteMovementDataToJson(FullServerFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber, time);
 		}
-		else{
-			WriteMovementDataToJson(FullClientFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber);
+		else {
+			WriteMovementDataToJson(FullClientFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber, time);
 		}
 	}
 	else return;
-	
+
 	// auto moves
 	FVector Vector;
 	Vector = Scenario.GetMove(timeSeconds);
 
 	// not move when vector at 0		
 	if (!Vector.IsZero())
-	{		
+	{
 		MoveToPosition(Vector);
 	}
 }
 
-void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double TimeSeconds, uint64 FrameNumber)
+void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double TimeSeconds, uint64 FrameNumber, long long int TimeNano)
 {
-    // Create a JSON object to store movement data
-    TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
+	// Create a JSON object to store movement data
+	TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
 
-    // Add movement data to the JSON object
-    JsonObject->SetNumberField(TEXT("PlayerLocationX"), PlayerLocation.X);
-    JsonObject->SetNumberField(TEXT("PlayerLocationY"), PlayerLocation.Y);
-    JsonObject->SetNumberField(TEXT("Time"), TimeSeconds);
-    JsonObject->SetNumberField(TEXT("FrameNumber"), FrameNumber);
-    // Convert JSON object to string
-    FString JsonString;
-    TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&JsonString);
-    FJsonSerializer::Serialize(JsonObject.ToSharedRef(), JsonWriter);
+	// Add movement data to the JSON object
+	JsonObject->SetNumberField(TEXT("PlayerLocationX"), PlayerLocation.X);
+	JsonObject->SetNumberField(TEXT("PlayerLocationY"), PlayerLocation.Y);
+	JsonObject->SetNumberField(TEXT("Time"), TimeSeconds);
+	JsonObject->SetNumberField(TEXT("TimeNano"), TimeNano);
+	JsonObject->SetNumberField(TEXT("FrameNumber"), FrameNumber);
+	// Convert JSON object to string
+	FString JsonString;
+	TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&JsonString);
+	FJsonSerializer::Serialize(JsonObject.ToSharedRef(), JsonWriter);
 
 	//UE_LOG(LogTemplateCharacter, Error, TEXT("JsonString: %s"), *JsonString);
 
-    // Write the JSON string to the file
-    std::ofstream MyFile(TCHAR_TO_UTF8(*FilePath), std::ios::app);
-    MyFile << TCHAR_TO_UTF8(*JsonString);
-    MyFile.close();
+	// Write the JSON string to the file
+	std::ofstream MyFile(TCHAR_TO_UTF8(*FilePath), std::ios::app);
+	MyFile << TCHAR_TO_UTF8(*JsonString);
+	MyFile.close();
 }
