@@ -1,8 +1,50 @@
 {
     "Move0":{
-        "Timestamp":13.0,
-        "Duration":2,
-        "X":1000,
-        "Y":1210
+        "Timestamp":5.0,
+        "Duration":6.0,
+        "X":2700,
+        "Y":1100
+    },
+    "Move1":{
+        "Timestamp":11.0,
+        "Duration":7.0,
+        "X":2700,
+        "Y":3100
+    },
+    "Move2":{
+        "Timestamp":18.0,
+        "Duration":6.0,
+        "X":900,
+        "Y":3100
+    },
+    "Move3":{
+        "Timestamp":24.0,
+        "Duration":7.0,
+        "X":900,
+        "Y":1100
+    },
+    "Move4":{
+        "Timestamp":31.0,
+        "Duration":6.0,
+        "X":2700,
+        "Y":1100
+    },
+    "Move5":{
+        "Timestamp":37.0,
+        "Duration":7.0,
+        "X":2700,
+        "Y":3100
+    },
+    "Move6":{
+        "Timestamp":44.0,
+        "Duration":6.0,
+        "X":900,
+        "Y":3100
+    },
+    "Move7":{
+        "Timestamp":50.0,
+        "Duration":7.0,
+        "X":900,
+        "Y":1100
     }
 }

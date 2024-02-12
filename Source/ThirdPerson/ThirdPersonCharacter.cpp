@@ -179,14 +179,6 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	uint32 FPS = 1.0f/ DeltaTime;
-	if(HasAuthority()){
-		UE_LOG(LogTemplateCharacter, Log, TEXT("Server FPS: %d"), FPS);
-	}
-	else{
-		UE_LOG(LogTemplateCharacter, Log, TEXT("Client FPS: %d"), ClientFixedFPS);
-	
-	}
 	uint64 CurrentFrameNumber = GFrameCounter;
 
 	UWorld* World = GetWorld();
@@ -234,7 +226,7 @@ void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, con
     TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&JsonString);
     FJsonSerializer::Serialize(JsonObject.ToSharedRef(), JsonWriter);
 
-	//UE_LOG(LogTemplateCharacter, Error, TEXT("JsonString: %s"), *JsonString);
+	//UE_LOG(LogTemplateCharacter, Log, TEXT("JsonString: %s"), *JsonString);
 
     // Write the JSON string to the file
     std::ofstream MyFile(TCHAR_TO_UTF8(*FilePath), std::ios::app);
