@@ -16,7 +16,7 @@ struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
-UCLASS(config=Game)
+UCLASS(config = Game)
 class AThirdPersonCharacter : public ACharacter
 {
 	GENERATED_BODY()
@@ -28,7 +28,7 @@ class AThirdPersonCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
-	
+
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;
@@ -49,7 +49,7 @@ class AThirdPersonCharacter : public ACharacter
 
 public:
 	AThirdPersonCharacter();
-	
+
 
 protected:
 	/** Called every tick, used for auto movement */
@@ -58,17 +58,17 @@ protected:
 	/** Get the movement scenario from Cli args */
 	void GetMovementScenario();
 
-	void WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double Time, uint64 FrameNumber);
+	void WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double Time, uint64 FrameNumber, long long int TimeNano);
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
+
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
 	// To add mapping context
 	virtual void BeginPlay();
 
@@ -82,4 +82,3 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
-
