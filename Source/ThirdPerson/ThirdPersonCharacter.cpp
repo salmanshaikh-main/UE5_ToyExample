@@ -1,11 +1,14 @@
 #include "ThirdPersonCharacter.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/Engine.h"
+#include "ThirdPersonProjectile.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "GameFramework/Controller.h"
+#include "GameFramework/GameModeBase.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
@@ -19,6 +22,7 @@
 #include <chrono>
 #include "Misc/DateTime.h"
 #include "Kismet/KismetSystemLibrary.h" 
+#include "Engine/World.h"
 
 
 
@@ -66,6 +70,16 @@ AThirdPersonCharacter::AThirdPersonCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	//Initialize the player's Health
+    MaxHealth = 100.0f;
+    CurrentHealth = MaxHealth;
+
+	//Initialize projectile class
+    ProjectileClass = AThirdPersonProjectile::StaticClass();
+    //Initialize fire rate
+    FireRate = 0.25f;
+    bIsFiringWeapon = false;
+
 }
 
 void AThirdPersonCharacter::BeginPlay()
@@ -81,7 +95,9 @@ void AThirdPersonCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-
+	
+	//OnHealthUpdate();
+	
 	// Init the Scenario
 	Scenario.InitializeScenarioFromArgs();
 
@@ -116,6 +132,9 @@ void AThirdPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AThirdPersonCharacter::Look);
+
+		// Handle firing projectiles
+    	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AThirdPersonCharacter::StartFire);
 	}
 	else
 	{
@@ -150,6 +169,93 @@ void AThirdPersonCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
+// Replicated Properties
+
+void AThirdPersonCharacter::GetLifetimeReplicatedProps(TArray <FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	//Replicate current health.
+	DOREPLIFETIME(AThirdPersonCharacter, CurrentHealth);
+}
+
+void AThirdPersonCharacter::OnHealthUpdate()
+{
+	//Client-specific functionality
+	if (IsLocallyControlled())
+	{
+		FString healthMessage = FString::Printf(TEXT("You now have %f health remaining."), CurrentHealth);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, healthMessage);
+
+		if (CurrentHealth <= 0)
+		{
+			FString deathMessage = FString::Printf(TEXT("You have been killed."));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, deathMessage);
+			ServerPlayerDied();
+		}
+	}
+
+	//Server-specific functionality
+	if (GetLocalRole() == ROLE_Authority)
+	{
+		FString healthMessage = FString::Printf(TEXT("%s now has %f health remaining."), *GetFName().ToString(), CurrentHealth);
+		UE_LOG(LogTemplateCharacter, Log, TEXT("%s"), *healthMessage);
+	}
+
+	//Functions that occur on all machines.
+	//Any special functionality that should occur as a result of damage or death should be placed here.
+}
+
+void AThirdPersonCharacter::ServerPlayerDied_Implementation()
+{
+    // Handle server-specific logic here
+    // Restart the level or perform any other server-specific actions
+    // For example, you can call a function to restart the level on the server
+
+    RestartLevelOnServer();
+}
+
+// Function to restart the level on the server
+void AThirdPersonCharacter::RestartLevelOnServer()
+{
+    // Check if running on the server
+    if (HasAuthority())
+    {
+        // Get the current world
+        UWorld* World = GetWorld();
+
+        if (World)
+        {
+            // Specify the map name to travel to
+            FString MapName = "ThirdPersonMap";
+
+            // Use ServerTravel to restart the level on the server
+            World->ServerTravel(MapName);
+        }
+    }
+}
+
+
+void AThirdPersonCharacter::OnRep_CurrentHealth()
+{
+	OnHealthUpdate();
+}
+
+void AThirdPersonCharacter::SetCurrentHealth(float healthValue)
+{
+	if (GetLocalRole() == ROLE_Authority)
+	{
+		CurrentHealth = FMath::Clamp(healthValue, 0.f, MaxHealth);
+		OnHealthUpdate();
+	}
+}
+
+float AThirdPersonCharacter::TakeDamage(float DamageTaken, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float damageApplied = CurrentHealth - DamageTaken;
+	SetCurrentHealth(damageApplied);
+	return damageApplied;
+}
 
 void AThirdPersonCharacter::MoveToPosition(FVector TargetLocation)
 {
@@ -193,17 +299,21 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 
 		auto currentTime = std::chrono::system_clock::now();
 		auto durationSinceEpoch = currentTime.time_since_epoch();
-		auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(durationSinceEpoch);
-		long long int time = nanoseconds.count();
+		auto seconds = std::chrono::duration_cast<std::chrono::seconds>(durationSinceEpoch);
+		auto nanoseconds = durationSinceEpoch - seconds;
+
+		long long int totalSeconds = seconds.count();
+		long long int totalNanoseconds = nanoseconds.count();
+
 
 		UE_LOG(LogTemplateCharacter, Verbose, TEXT("time: %lld"), currentTime);
 
 		if (HasAuthority())
 		{
-			WriteMovementDataToJson(FullServerFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber, time);
+			WriteMovementDataToJson(FullServerFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber, totalSeconds, totalNanoseconds);
 		}
 		else {
-			WriteMovementDataToJson(FullClientFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber, time);
+			WriteMovementDataToJson(FullClientFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber, totalSeconds, totalNanoseconds);
 		}
 	}
 	else return;
@@ -219,7 +329,35 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 	}
 }
 
-void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double TimeSeconds, uint64 FrameNumber, long long int TimeNano)
+void AThirdPersonCharacter::StartFire()
+    {
+        if (!bIsFiringWeapon)
+        {
+            bIsFiringWeapon = true;
+            UWorld* World = GetWorld();
+            World->GetTimerManager().SetTimer(FiringTimer, this, &AThirdPersonCharacter::StopFire, FireRate, false);
+            HandleFire();
+        }
+    }
+
+void AThirdPersonCharacter::StopFire()
+{
+	bIsFiringWeapon = false;
+}
+
+void AThirdPersonCharacter::HandleFire_Implementation()
+{
+	FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 100.0f ) + (GetActorUpVector() * 50.0f);
+	FRotator spawnRotation = GetActorRotation();
+
+	FActorSpawnParameters spawnParameters;
+	spawnParameters.Instigator = GetInstigator();
+	spawnParameters.Owner = this;
+
+	AThirdPersonProjectile* spawnedProjectile = GetWorld()->SpawnActor<AThirdPersonProjectile>(spawnLocation, spawnRotation, spawnParameters);
+}
+
+void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double TimeSeconds, uint64 FrameNumber, long long int TimeSec, long long int TimeNano)
 {
 	// Create a JSON object to store movement data
 	TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
@@ -228,6 +366,7 @@ void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, con
 	JsonObject->SetNumberField(TEXT("PlayerLocationX"), PlayerLocation.X);
 	JsonObject->SetNumberField(TEXT("PlayerLocationY"), PlayerLocation.Y);
 	JsonObject->SetNumberField(TEXT("Time"), TimeSeconds);
+	JsonObject->SetNumberField(TEXT("TimeSec"), TimeSec);
 	JsonObject->SetNumberField(TEXT("TimeNano"), TimeNano);
 	JsonObject->SetNumberField(TEXT("FrameNumber"), FrameNumber);
 	// Convert JSON object to string

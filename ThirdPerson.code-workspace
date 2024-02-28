@@ -1,0 +1,2088 @@
+{
+	"folders": [
+		{
+			"name": "ThirdPerson",
+			"path": "."
+		},
+		{
+			"name": "UE5",
+			"path": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"npm.autoDetect": "off"
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp",
+			"vadimcn.vscode-lldb",
+			"ms-vscode.mono-debug",
+			"dfarley1.file-picker"
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "ThirdPerson Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson Linux Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson Linux Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson Linux Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"Linux",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson LinuxArm64 Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson LinuxArm64 DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson LinuxArm64 Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson LinuxArm64 Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPerson LinuxArm64 Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPerson LinuxArm64 Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPerson",
+					"LinuxArm64",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient Linux Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient Linux Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient Linux Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"Linux",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient LinuxArm64 Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient LinuxArm64 DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient LinuxArm64 Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient LinuxArm64 Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonClient LinuxArm64 Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonClient LinuxArm64 Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonClient",
+					"LinuxArm64",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonEditor Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonEditor",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonEditor Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonEditor",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonEditor Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonEditor Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonEditor",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonEditor Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonEditor",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonEditor Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonEditor",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonEditor Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonEditor Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonEditor",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonEditor Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonEditor",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonEditor Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonEditor",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonEditor Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonEditor Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonEditor",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer Linux Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer Linux Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer Linux Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"Linux",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer LinuxArm64 Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Debug",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer LinuxArm64 DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer LinuxArm64 Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Development",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer LinuxArm64 Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Test",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ThirdPersonServer LinuxArm64 Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			},
+			{
+				"label": "ThirdPersonServer LinuxArm64 Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ThirdPersonServer",
+					"LinuxArm64",
+					"Shipping",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+				}
+			}
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Launch ThirdPerson (Debug)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-Debug",
+				"preLaunchTask": "ThirdPerson Linux Debug Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPerson (DebugGame)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-DebugGame",
+				"preLaunchTask": "ThirdPerson Linux DebugGame Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPerson (Development)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson",
+				"preLaunchTask": "ThirdPerson Linux Development Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPerson (Test)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-Test",
+				"preLaunchTask": "ThirdPerson Linux Test Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPerson (Shipping)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-Shipping",
+				"preLaunchTask": "ThirdPerson Linux Shipping Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonClient (Debug)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-Debug",
+				"preLaunchTask": "ThirdPersonClient Linux Debug Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonClient (DebugGame)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-DebugGame",
+				"preLaunchTask": "ThirdPersonClient Linux DebugGame Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonClient (Development)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient",
+				"preLaunchTask": "ThirdPersonClient Linux Development Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonClient (Test)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-Test",
+				"preLaunchTask": "ThirdPersonClient Linux Test Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonClient (Shipping)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-Shipping",
+				"preLaunchTask": "ThirdPersonClient Linux Shipping Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonEditor (Debug)",
+				"request": "launch",
+				"program": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Binaries/Linux/UnrealEditor-Linux-Debug",
+				"preLaunchTask": "ThirdPersonEditor Linux Debug Build",
+				"args": [
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject"
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonEditor (DebugGame)",
+				"request": "launch",
+				"program": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame",
+				"preLaunchTask": "ThirdPersonEditor Linux DebugGame Build",
+				"args": [
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject"
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonEditor (Development)",
+				"request": "launch",
+				"program": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Binaries/Linux/UnrealEditor",
+				"preLaunchTask": "ThirdPersonEditor Linux Development Build",
+				"args": [
+					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject"
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonServer (Debug)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-Debug",
+				"preLaunchTask": "ThirdPersonServer Linux Debug Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonServer (DebugGame)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-DebugGame",
+				"preLaunchTask": "ThirdPersonServer Linux DebugGame Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonServer (Development)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer",
+				"preLaunchTask": "ThirdPersonServer Linux Development Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonServer (Test)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-Test",
+				"preLaunchTask": "ThirdPersonServer Linux Test Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ThirdPersonServer (Shipping)",
+				"request": "launch",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-Shipping",
+				"preLaunchTask": "ThirdPersonServer Linux Shipping Build",
+				"args": [
+				],
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
+				"type": "cppdbg",
+				"visualizerFile": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Generate Project Files",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "UnrealBuildTool Linux Development Build",
+				"program": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Build/BatchFiles/RunUBT.bat",
+				"args": [
+					"-projectfiles",
+					"-vscode",
+					"-project=/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-game",
+					"-engine",
+					"-dotnet"
+				],
+				"console": "internalConsole",
+				"internalConsoleOptions": "openOnSessionStart",
+				"stopAtEntry": false,
+				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release"
+			}
+		]
+	}
+}
