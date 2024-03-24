@@ -347,7 +347,7 @@ void AThirdPersonCharacter::StopFire()
 
 void AThirdPersonCharacter::HandleFire_Implementation()
 {
-	FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 100.0f ) + (GetActorUpVector() * 50.0f);
+	FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 200.0f ) + (GetActorUpVector() * 30.0f);
 	FRotator spawnRotation = GetActorRotation();
 
 	FActorSpawnParameters spawnParameters;
