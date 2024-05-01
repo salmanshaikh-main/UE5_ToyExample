@@ -184,7 +184,7 @@ void AThirdPersonCharacter::OnHealthUpdate()
 	//Client-specific functionality
 	if (IsLocallyControlled())
 	{
-		FString healthMessage = FString::Printf(TEXT("You now have %f health remaining."), CurrentHealth);
+		FString healthMessage = FString::Printf(TEXT("You are stupid now have %f health remaining."), CurrentHealth);
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, healthMessage);
 
 		if (CurrentHealth <= 0)
@@ -330,15 +330,18 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 }
 
 void AThirdPersonCharacter::StartFire()
-    {
-        if (!bIsFiringWeapon)
-        {
-            bIsFiringWeapon = true;
-            UWorld* World = GetWorld();
-            World->GetTimerManager().SetTimer(FiringTimer, this, &AThirdPersonCharacter::StopFire, FireRate, false);
-            HandleFire();
-        }
-    }
+{
+	if (!bIsFiringWeapon)
+	{
+		HitScanWeapon->StartFire();
+		// Code to handle Projectile Fire; to move to Weapon class
+		/*bIsFiringWeapon = true;
+		UWorld* World = GetWorld();
+		World->GetTimerManager().SetTimer(FiringTimer, this, &AThirdPersonCharacter::StopFire, FireRate, false);
+		HandleFire();*/
+
+	}
+}
 
 void AThirdPersonCharacter::StopFire()
 {

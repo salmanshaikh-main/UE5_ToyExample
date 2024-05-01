@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "UScenario.h"
+#include "Weapon.h"
 #include "ThirdPersonCharacter.generated.h"
 
 class USpringArmComponent;
@@ -119,6 +120,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category="Gameplay|Projectile")
 	TSubclassOf<class AThirdPersonProjectile> ProjectileClass;
+
+	UPROPERTY(Replicated)
+	AWeapon* HitScanWeapon;
 
 	/** Delay between shots in seconds. Used to control fire rate for your test projectile, but also to prevent an overflow of server functions from binding SpawnProjectile directly to input.*/
 	UPROPERTY(EditDefaultsOnly, Category="Gameplay")
