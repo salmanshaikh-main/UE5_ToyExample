@@ -10,7 +10,7 @@
             "cStandard": "c17",
             "cppStandard": "c++20",
             "intelliSenseMode": "clang-x64",
-            "compileCommands": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson.json"
+            "compileCommands": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson.json"
         },
         {
             "name": "Linux",
@@ -22,7 +22,7 @@
             "cStandard": "c17",
             "cppStandard": "c++20",
             "intelliSenseMode": "clang-x64",
-            "compileCommands": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_Default.json"
+            "compileCommands": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_Default.json"
         }
     ],
     "version": 4

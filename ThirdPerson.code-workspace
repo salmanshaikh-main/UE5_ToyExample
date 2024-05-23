@@ -33,7 +33,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -50,7 +50,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -70,7 +70,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -88,7 +88,7 @@
 					"ThirdPerson",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -105,7 +105,7 @@
 					"ThirdPerson",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -125,7 +125,7 @@
 					"ThirdPerson",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -143,7 +143,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -160,7 +160,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -180,7 +180,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -198,7 +198,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -215,7 +215,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -235,7 +235,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -253,7 +253,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -270,7 +270,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -290,7 +290,7 @@
 					"ThirdPerson",
 					"Linux",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -308,7 +308,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -325,7 +325,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -345,7 +345,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -363,7 +363,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -380,7 +380,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -400,7 +400,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -418,7 +418,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -435,7 +435,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -455,7 +455,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -473,7 +473,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -490,7 +490,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -510,7 +510,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -528,7 +528,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -545,7 +545,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -565,7 +565,7 @@
 					"ThirdPerson",
 					"LinuxArm64",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -583,7 +583,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -600,7 +600,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -620,7 +620,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -638,7 +638,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -655,7 +655,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -675,7 +675,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -693,7 +693,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -710,7 +710,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -730,7 +730,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -748,7 +748,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -765,7 +765,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -785,7 +785,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -803,7 +803,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -820,7 +820,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -840,7 +840,7 @@
 					"ThirdPersonClient",
 					"Linux",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -858,7 +858,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -875,7 +875,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -895,7 +895,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -913,7 +913,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -930,7 +930,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -950,7 +950,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -968,7 +968,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -985,7 +985,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1005,7 +1005,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1023,7 +1023,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1040,7 +1040,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1060,7 +1060,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1078,7 +1078,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1095,7 +1095,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1115,7 +1115,7 @@
 					"ThirdPersonClient",
 					"LinuxArm64",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1133,7 +1133,7 @@
 					"ThirdPersonEditor",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1150,7 +1150,7 @@
 					"ThirdPersonEditor",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1170,7 +1170,7 @@
 					"ThirdPersonEditor",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1188,7 +1188,7 @@
 					"ThirdPersonEditor",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1205,7 +1205,7 @@
 					"ThirdPersonEditor",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1225,7 +1225,7 @@
 					"ThirdPersonEditor",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1243,7 +1243,7 @@
 					"ThirdPersonEditor",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1260,7 +1260,7 @@
 					"ThirdPersonEditor",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1280,7 +1280,7 @@
 					"ThirdPersonEditor",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1298,7 +1298,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1315,7 +1315,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1335,7 +1335,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1353,7 +1353,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1370,7 +1370,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1390,7 +1390,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1408,7 +1408,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1425,7 +1425,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1445,7 +1445,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1463,7 +1463,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1480,7 +1480,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1500,7 +1500,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1518,7 +1518,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1535,7 +1535,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1555,7 +1555,7 @@
 					"ThirdPersonServer",
 					"Linux",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1573,7 +1573,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1590,7 +1590,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1610,7 +1610,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Debug",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1628,7 +1628,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1645,7 +1645,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1665,7 +1665,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"DebugGame",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1683,7 +1683,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1700,7 +1700,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1720,7 +1720,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Development",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1738,7 +1738,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1755,7 +1755,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1775,7 +1775,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Test",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1793,7 +1793,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1810,7 +1810,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex"
 				],
 				"problemMatcher": "$msCompile",
@@ -1830,7 +1830,7 @@
 					"ThirdPersonServer",
 					"LinuxArm64",
 					"Shipping",
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-waitmutex",
 					"-clean"
 				],
@@ -1848,7 +1848,7 @@
 			{
 				"name": "Launch ThirdPerson (Debug)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-Debug",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-Debug",
 				"preLaunchTask": "ThirdPerson Linux Debug Build",
 				"args": [
 				],
@@ -1860,7 +1860,7 @@
 			{
 				"name": "Launch ThirdPerson (DebugGame)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-DebugGame",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-DebugGame",
 				"preLaunchTask": "ThirdPerson Linux DebugGame Build",
 				"args": [
 				],
@@ -1872,7 +1872,7 @@
 			{
 				"name": "Launch ThirdPerson (Development)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson",
 				"preLaunchTask": "ThirdPerson Linux Development Build",
 				"args": [
 				],
@@ -1884,7 +1884,7 @@
 			{
 				"name": "Launch ThirdPerson (Test)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-Test",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-Test",
 				"preLaunchTask": "ThirdPerson Linux Test Build",
 				"args": [
 				],
@@ -1896,7 +1896,7 @@
 			{
 				"name": "Launch ThirdPerson (Shipping)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-Shipping",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPerson-Linux-Shipping",
 				"preLaunchTask": "ThirdPerson Linux Shipping Build",
 				"args": [
 				],
@@ -1908,7 +1908,7 @@
 			{
 				"name": "Launch ThirdPersonClient (Debug)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-Debug",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-Debug",
 				"preLaunchTask": "ThirdPersonClient Linux Debug Build",
 				"args": [
 				],
@@ -1920,7 +1920,7 @@
 			{
 				"name": "Launch ThirdPersonClient (DebugGame)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-DebugGame",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-DebugGame",
 				"preLaunchTask": "ThirdPersonClient Linux DebugGame Build",
 				"args": [
 				],
@@ -1932,7 +1932,7 @@
 			{
 				"name": "Launch ThirdPersonClient (Development)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient",
 				"preLaunchTask": "ThirdPersonClient Linux Development Build",
 				"args": [
 				],
@@ -1944,7 +1944,7 @@
 			{
 				"name": "Launch ThirdPersonClient (Test)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-Test",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-Test",
 				"preLaunchTask": "ThirdPersonClient Linux Test Build",
 				"args": [
 				],
@@ -1956,7 +1956,7 @@
 			{
 				"name": "Launch ThirdPersonClient (Shipping)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-Shipping",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonClient-Linux-Shipping",
 				"preLaunchTask": "ThirdPersonClient Linux Shipping Build",
 				"args": [
 				],
@@ -1971,7 +1971,7 @@
 				"program": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Binaries/Linux/UnrealEditor-Linux-Debug",
 				"preLaunchTask": "ThirdPersonEditor Linux Debug Build",
 				"args": [
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject"
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject"
 				],
 				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
 				"type": "cppdbg",
@@ -1984,7 +1984,7 @@
 				"program": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame",
 				"preLaunchTask": "ThirdPersonEditor Linux DebugGame Build",
 				"args": [
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject"
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject"
 				],
 				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
 				"type": "cppdbg",
@@ -1997,7 +1997,7 @@
 				"program": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Binaries/Linux/UnrealEditor",
 				"preLaunchTask": "ThirdPersonEditor Linux Development Build",
 				"args": [
-					"/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject"
+					"/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject"
 				],
 				"cwd": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release",
 				"type": "cppdbg",
@@ -2007,7 +2007,7 @@
 			{
 				"name": "Launch ThirdPersonServer (Debug)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-Debug",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-Debug",
 				"preLaunchTask": "ThirdPersonServer Linux Debug Build",
 				"args": [
 				],
@@ -2019,7 +2019,7 @@
 			{
 				"name": "Launch ThirdPersonServer (DebugGame)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-DebugGame",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-DebugGame",
 				"preLaunchTask": "ThirdPersonServer Linux DebugGame Build",
 				"args": [
 				],
@@ -2031,7 +2031,7 @@
 			{
 				"name": "Launch ThirdPersonServer (Development)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer",
 				"preLaunchTask": "ThirdPersonServer Linux Development Build",
 				"args": [
 				],
@@ -2043,7 +2043,7 @@
 			{
 				"name": "Launch ThirdPersonServer (Test)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-Test",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-Test",
 				"preLaunchTask": "ThirdPersonServer Linux Test Build",
 				"args": [
 				],
@@ -2055,7 +2055,7 @@
 			{
 				"name": "Launch ThirdPersonServer (Shipping)",
 				"request": "launch",
-				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-Shipping",
+				"program": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Binaries/Linux/ThirdPersonServer-Linux-Shipping",
 				"preLaunchTask": "ThirdPersonServer Linux Shipping Build",
 				"args": [
 				],
@@ -2073,7 +2073,7 @@
 				"args": [
 					"-projectfiles",
 					"-vscode",
-					"-project=/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
+					"-project=/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject",
 					"-game",
 					"-engine",
 					"-dotnet"

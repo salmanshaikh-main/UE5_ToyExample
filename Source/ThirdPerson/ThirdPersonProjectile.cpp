@@ -52,8 +52,8 @@ AThirdPersonProjectile::AThirdPersonProjectile()
 	//Definition for the Projectile Movement Component.
     ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
     ProjectileMovementComponent->SetUpdatedComponent(SphereComponent);
-    ProjectileMovementComponent->InitialSpeed = 1500.0f;
-    ProjectileMovementComponent->MaxSpeed = 1500.0f;
+    ProjectileMovementComponent->InitialSpeed = 2500.0f;
+    ProjectileMovementComponent->MaxSpeed = 2500.0f;
     ProjectileMovementComponent->bRotationFollowsVelocity = true;
     ProjectileMovementComponent->ProjectileGravityScale = 0.0f;
 

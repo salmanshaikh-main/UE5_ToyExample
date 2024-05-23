@@ -184,14 +184,14 @@ void AThirdPersonCharacter::OnHealthUpdate()
 	//Client-specific functionality
 	if (IsLocallyControlled())
 	{
-		FString healthMessage = FString::Printf(TEXT("You are stupid now have %f health remaining."), CurrentHealth);
+		FString healthMessage = FString::Printf(TEXT("You now have %f health remaining."), CurrentHealth);
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, healthMessage);
 
 		if (CurrentHealth <= 0)
 		{
 			FString deathMessage = FString::Printf(TEXT("You have been killed."));
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, deathMessage);
-			ServerPlayerDied();
+			//ServerPlayerDied();
 		}
 	}
 
@@ -206,34 +206,34 @@ void AThirdPersonCharacter::OnHealthUpdate()
 	//Any special functionality that should occur as a result of damage or death should be placed here.
 }
 
-void AThirdPersonCharacter::ServerPlayerDied_Implementation()
-{
-    // Handle server-specific logic here
-    // Restart the level or perform any other server-specific actions
-    // For example, you can call a function to restart the level on the server
+// void AThirdPersonCharacter::ServerPlayerDied_Implementation()
+// {
+//     // Handle server-specific logic here
+//     // Restart the level or perform any other server-specific actions
+//     // For example, you can call a function to restart the level on the server
 
-    RestartLevelOnServer();
-}
+//     // RestartLevelOnServer();
+// }
 
 // Function to restart the level on the server
-void AThirdPersonCharacter::RestartLevelOnServer()
-{
-    // Check if running on the server
-    if (HasAuthority())
-    {
-        // Get the current world
-        UWorld* World = GetWorld();
+// void AThirdPersonCharacter::RestartLevelOnServer()
+// {
+//     // Check if running on the server
+//     if (HasAuthority())
+//     {
+//         // Get the current world
+//         UWorld* World = GetWorld();
 
-        if (World)
-        {
-            // Specify the map name to travel to
-            FString MapName = "ThirdPersonMap";
+//         if (World)
+//         {
+//             // Specify the map name to travel to
+//             FString MapName = "ThirdPersonMap";
 
-            // Use ServerTravel to restart the level on the server
-            World->ServerTravel(MapName);
-        }
-    }
-}
+//             // Use ServerTravel to restart the level on the server
+//             World->ServerTravel(MapName);
+//         }
+//     }
+// }
 
 
 void AThirdPersonCharacter::OnRep_CurrentHealth()
@@ -330,18 +330,15 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 }
 
 void AThirdPersonCharacter::StartFire()
-{
-	if (!bIsFiringWeapon)
-	{
-		HitScanWeapon->StartFire();
-		// Code to handle Projectile Fire; to move to Weapon class
-		/*bIsFiringWeapon = true;
-		UWorld* World = GetWorld();
-		World->GetTimerManager().SetTimer(FiringTimer, this, &AThirdPersonCharacter::StopFire, FireRate, false);
-		HandleFire();*/
-
-	}
-}
+    {
+        if (!bIsFiringWeapon)
+        {
+            bIsFiringWeapon = true;
+            UWorld* World = GetWorld();
+            World->GetTimerManager().SetTimer(FiringTimer, this, &AThirdPersonCharacter::StopFire, FireRate, false);
+            HandleFire();
+        }
+    }
 
 void AThirdPersonCharacter::StopFire()
 {
@@ -350,8 +347,9 @@ void AThirdPersonCharacter::StopFire()
 
 void AThirdPersonCharacter::HandleFire_Implementation()
 {
-	FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 200.0f ) + (GetActorUpVector() * 30.0f);
+	FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 200.0f ) + (GetActorUpVector() * 60.0f);
 	FRotator spawnRotation = GetActorRotation();
+	spawnRotation.Yaw -= 3.0f;
 
 	FActorSpawnParameters spawnParameters;
 	spawnParameters.Instigator = GetInstigator();

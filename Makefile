@@ -2,7 +2,7 @@
 # *DO NOT EDIT*
 
 UNREALROOTPATH = /home/shais0a/Downloads/UnrealEngine-5.3.2-release
-GAMEPROJECTFILE =/home/shais0a/Documents/Unreal Projects/Thesis/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject
+GAMEPROJECTFILE =/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/ThirdPerson.uproject
 
 TARGETS = \
 	ThirdPerson-Linux-Debug  \

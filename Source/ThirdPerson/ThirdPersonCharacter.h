@@ -70,8 +70,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	float TakeDamage( float DamageTaken, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser ) override;
 
-	UFUNCTION(Server, Reliable)
-	void ServerPlayerDied();
+	//UFUNCTION(Server, Reliable)
+	//void ServerPlayerDied();
 
 
 protected:
@@ -98,7 +98,7 @@ protected:
 	/** Movement to a specific location */
 	void MoveToPosition(FVector TargetLocation);
 
-	void RestartLevelOnServer();
+	//void RestartLevelOnServer();
 
 	/** The player's maximum health. This is the highest value of their health can be. This value is a value of the player's health, which starts at when spawned.*/
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
