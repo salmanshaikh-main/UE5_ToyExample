@@ -15,5 +15,7 @@ class THIRDPERSON_API ACustomPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
+    UFUNCTION(Client, Reliable)
+    void Client_OnResponseReceived(const FString& PlayerID, const FString& ResponseString);
 
 };

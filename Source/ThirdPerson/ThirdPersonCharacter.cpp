@@ -2,6 +2,7 @@
 #include "Engine/LocalPlayer.h"
 #include "Engine/Engine.h"
 #include "ThirdPersonProjectile.h"
+#include "APICallerActor.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -23,6 +24,8 @@
 #include "Misc/DateTime.h"
 #include "Kismet/KismetSystemLibrary.h" 
 #include "Engine/World.h"
+#include "DrawDebugHelpers.h"
+#include "HAL/PlatformProcess.h"
 
 
 
@@ -80,6 +83,8 @@ AThirdPersonCharacter::AThirdPersonCharacter()
     FireRate = 0.25f;
     bIsFiringWeapon = false;
 
+	APIManager = CreateDefaultSubobject<UAPIManager>(TEXT("APIManager"));
+
 }
 
 void AThirdPersonCharacter::BeginPlay()
@@ -135,12 +140,105 @@ void AThirdPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 		// Handle firing projectiles
     	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AThirdPersonCharacter::StartFire);
+
+		//PlayerInputComponent->BindAction("CallAPI", IE_Pressed, this, &AThirdPersonCharacter::APIRequest);
+
+	//--------------------------------------------------------------------------------------------------------------------------------
+		//PlayerInputComponent->BindAction("FromClient", IE_Pressed, this, &AThirdPersonCharacter::ExecuteScript);
+
+		PlayerInputComponent->BindAction("CallService", IE_Pressed, this, &AThirdPersonCharacter::CallRunningService);
+
 	}
 	else
 	{
 		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
 }
+
+// bool AThirdPersonCharacter::IsPythonInstalled()
+// {
+//     FString Command = TEXT("python --version");
+//     #if !PLATFORM_WINDOWS
+//         Command = TEXT("python3 --version");
+//     #endif
+//     int32 ReturnCode = 0;
+//     FString StdOut;
+//     FString StdErr;
+//     FPlatformProcess::ExecProcess(*Command, nullptr, &ReturnCode, &StdOut, &StdErr);
+//     return ReturnCode == 0;
+// }
+
+// void AThirdPersonCharacter::ExecuteScript()
+// {
+//     FString ScriptPath;
+
+// #if PLATFORM_WINDOWS
+//     ScriptPath = FPaths::Combine(FPaths::ProjectDir(), TEXT("Scripts/example_script.bat"));
+// #elif PLATFORM_LINUX
+//     ScriptPath = FPaths::Combine(FPaths::ProjectDir(), TEXT("Scripts/example_script.sh"));
+//     // ScriptPath = FPaths::ConvertRelativePathToFull(ScriptPath); // Convert to absolute path
+//     // FString Command = TEXT("python3");
+//     // FString QuotedScriptPath = FString::Printf(TEXT("\"%s\""), *ScriptPath); // Enclose path in quotes
+//     // TArray<FString> Arguments;
+//     // Arguments.Add(QuotedScriptPath);
+// #elif PLATFORM_MAC
+//     ScriptPath = FPaths::Combine(FPaths::ProjectDir(), TEXT("Scripts/example_script.sh"));
+// #else
+//     UE_LOG(LogTemp, Warning, TEXT("Unsupported platform!"));
+//     return;
+// #endif
+
+// 	if (FPaths::FileExists(ScriptPath))
+// 	{
+// 		FProcHandle ProcessHandle = FPlatformProcess::CreateProc(*Command, *Arguments[0], true, false, false, nullptr, 0, nullptr, nullptr);
+		
+// 		if (!ProcessHandle.IsValid())
+// 		{
+// 			UE_LOG(LogTemp, Warning, TEXT("Failed to start process: %s"), *ScriptPath);
+// 		}
+// 		else
+// 		{
+// 			UE_LOG(LogTemp, Warning, TEXT("Script executed successfully: %s"), *ScriptPath);
+// 		}
+// 	}
+// 	else
+// 	{
+// 		UE_LOG(LogTemp, Warning, TEXT("Script file does not exist: %s"), *ScriptPath);
+// 	}
+// }
+
+void AThirdPersonCharacter::CallRunningService()
+{
+    FString Url = TEXT("http://localhost:5000/apply_delay");
+
+    TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
+	Request->OnProcessRequestComplete().BindUObject(this, &AThirdPersonCharacter::OnServiceResponseReceived);
+    Request->SetURL(Url);
+    Request->SetVerb("GET");
+    Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+    Request->ProcessRequest();
+}
+
+void AThirdPersonCharacter::OnServiceResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
+    if (bWasSuccessful && Response->GetResponseCode() == 200)
+    {
+        UE_LOG(LogTemp, Log, TEXT("Successfully applied delay"));
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Failed to apply delay: %s"), *Response->GetContentAsString());
+    }
+}
+
+void AThirdPersonCharacter::ActivateSuperpower()
+{
+    if (APIManager)
+    {
+        APIManager->ActivateSuperpower();
+    }
+}
+
 
 void AThirdPersonCharacter::Move(const FInputActionValue& Value)
 {
@@ -184,14 +282,19 @@ void AThirdPersonCharacter::OnHealthUpdate()
 	//Client-specific functionality
 	if (IsLocallyControlled())
 	{
-		FString healthMessage = FString::Printf(TEXT("You now have %f health remaining."), CurrentHealth);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, healthMessage);
+		// FString healthMessage = FString::Printf(TEXT("You now have %f health remaining."), CurrentHealth);
+		// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, healthMessage);
 
 		if (CurrentHealth <= 0)
 		{
-			FString deathMessage = FString::Printf(TEXT("You have been killed."));
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, deathMessage);
-			//ServerPlayerDied();
+			//FString deathMessage = FString::Printf(TEXT("You have been killed."));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, deathMessage);
+			FVector RespawnLocation = FVector(1340, -1250, -167.85);
+			ServerRespawn(RespawnLocation);
+			//FString respawnMessage = FString::Printf(TEXT("You have respawned with full health"));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Purple, respawnMessage);
+			SetActorRotation(FRotator(180, 0, 0));
+			SetActorRotation(FRotator(-90, 0, 0));
 		}
 	}
 
@@ -201,11 +304,31 @@ void AThirdPersonCharacter::OnHealthUpdate()
 		FString healthMessage = FString::Printf(TEXT("%s now has %f health remaining."), *GetFName().ToString(), CurrentHealth);
 		UE_LOG(LogTemplateCharacter, Log, TEXT("%s"), *healthMessage);
 	}
-
-	//Functions that occur on all machines.
-	//Any special functionality that should occur as a result of damage or death should be placed here.
 }
 
+void AThirdPersonCharacter::ServerRespawn_Implementation(FVector NewLocation)
+{
+    if (HasAuthority())
+    {
+        // Stop any ongoing movement
+        GetCharacterMovement()->StopMovementImmediately();
+
+		// Set new location
+        SetActorLocation(NewLocation);
+
+		// Reset health
+        CurrentHealth = MaxHealth;
+
+		// Reset rotation
+        SetActorRotation(FRotator(-180, 0, 0));
+
+        // Notify clients that the character has respawned
+        OnRep_CurrentHealth();
+
+		FString respawnMessage = FString::Printf(TEXT("%s has now respawned with full health."), *GetFName().ToString());
+		UE_LOG(LogTemplateCharacter, Log, TEXT("%s"), *respawnMessage);
+    }
+}
 // void AThirdPersonCharacter::ServerPlayerDied_Implementation()
 // {
 //     // Handle server-specific logic here
@@ -259,11 +382,20 @@ float AThirdPersonCharacter::TakeDamage(float DamageTaken, struct FDamageEvent c
 
 void AThirdPersonCharacter::MoveToPosition(FVector TargetLocation)
 {
+	// FVector CurrentLocation = GetActorLocation();
 	FVector Direction = TargetLocation - GetActorLocation();
 	Direction.Normalize();
 	AddMovementInput(Direction);
-	CameraBoom->SetWorldLocation(GetActorLocation()); // not realy sure for the camera, look into cameraboom if we want somthing specific for the cam
+	//FollowCamera->SetWorldRotation(FRotator(0, 90, 0));
+	//CameraBoom->SetWorldLocation(GetActorLocation()); // not realy sure for the camera, look into cameraboom if we want somthing specific for the cam
 	UE_LOG(LogTemplateCharacter, Log, TEXT("Auto Move to position: %f %f %f"), Direction.X, Direction.Y, Direction.Z);
+	FRotator NewControlRotation = Direction.Rotation(); // Convert direction to rotation
+	NewControlRotation.Pitch = 0; // Keep the pitch level (no up/down tilt)
+	NewControlRotation.Roll = 0; // Keep the roll level (no tilt)
+	if (AController* Controller = GetController())
+	{
+		Controller->SetControlRotation(NewControlRotation); // Set the controller rotation to face the direction
+	}
 }
 
 
@@ -285,12 +417,17 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FVector CurrentLocation = GetActorLocation();
+
 	uint64 CurrentFrameNumber = GFrameCounter;
 
 	UWorld* World = GetWorld();
 	FVector PlayerLocation = GetActorLocation();
 
 	double timeSeconds;
+
+	FString LocationString = FString::Printf(TEXT("Current Location: X=%.2f Y=%.2f Z=%.2f"), CurrentLocation.X, CurrentLocation.Y, CurrentLocation.Z);
+    GEngine->AddOnScreenDebugMessage(1, 0.f, FColor::Yellow, LocationString);
 	
 
 	if (World)
@@ -308,6 +445,11 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 
 		UE_LOG(LogTemplateCharacter, Verbose, TEXT("time: %lld"), currentTime);
 
+		//if (GetLocalRole() == ROLE_Authority)
+		// {
+		// 	LogMovement();
+		// }
+
 		if (HasAuthority())
 		{
 			WriteMovementDataToJson(FullServerFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber, totalSeconds, totalNanoseconds);
@@ -317,16 +459,39 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 		}
 	}
 	else return;
-
+	
 	// auto moves
 	FVector Vector;
-	Vector = Scenario.GetMove(timeSeconds);
+	Vector = Scenario.GetMove(timeSeconds, CurrentLocation);
 
 	// not move when vector at 0		
+	// if vector is zero, send one last move to the last position
 	if (!Vector.IsZero())
 	{
 		MoveToPosition(Vector);
 	}
+	bool shootDone = false;
+	if (AController* Controller = GetController())
+	{
+		shootDone = Scenario.HandleShooting(timeSeconds, Cast<APlayerController>(Controller));
+	}
+}
+
+void AThirdPersonCharacter::LogMovement()
+{
+    FVector CurrentLocation = GetActorLocation();
+    UE_LOG(LogTemplateCharacter, Log, TEXT("Player %s moved to %s"),
+           *GetPlayerIdentifier(), *CurrentLocation.ToString());
+}
+
+FString AThirdPersonCharacter::GetPlayerIdentifier() const
+{
+    APlayerController* Player = GetController<APlayerController>();
+    if (Player)
+    {
+        return Player->GetName();
+    }
+    return FString(TEXT("Unknown"));
 }
 
 void AThirdPersonCharacter::StartFire()
@@ -347,16 +512,55 @@ void AThirdPersonCharacter::StopFire()
 
 void AThirdPersonCharacter::HandleFire_Implementation()
 {
-	FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 200.0f ) + (GetActorUpVector() * 60.0f);
+	FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 200.0f ) + (GetActorUpVector() * 62.0f);
 	FRotator spawnRotation = GetActorRotation();
-	spawnRotation.Yaw -= 3.0f;
+	spawnRotation.Yaw -= 2.0f;
 
 	FActorSpawnParameters spawnParameters;
 	spawnParameters.Instigator = GetInstigator();
 	spawnParameters.Owner = this;
 
 	AThirdPersonProjectile* spawnedProjectile = GetWorld()->SpawnActor<AThirdPersonProjectile>(spawnLocation, spawnRotation, spawnParameters);
+
 }
+
+void AThirdPersonCharacter::APIRequest()
+{
+	FString PlayerID;
+    // Assuming you have a way to get the PlayerID, e.g., from the PlayerState
+	APlayerState* PS = GetPlayerState();
+	PlayerID = PS->GetPlayerName();
+
+    ServerCallAPI(PlayerID);
+}
+
+
+void AThirdPersonCharacter::ServerCallAPI_Implementation(const FString& PlayerID)
+{
+    // This function will only be executed on the server
+    UE_LOG(LogTemp, Log, TEXT("ServerCallAPI_Implementation for Player called on server side %s"), *PlayerID);
+	//FVector PlayerLocation = GetActorLocation();
+    
+    // Spawn the APICaller actor
+    FActorSpawnParameters SpawnParams;
+    SpawnParams.Owner = this;
+    SpawnParams.Instigator = GetInstigator();
+
+    AAPICallerActor* APICaller = GetWorld()->SpawnActor<AAPICallerActor>(AAPICallerActor::StaticClass(), GetActorLocation(), GetActorRotation(), SpawnParams);
+    if (APICaller)
+    {
+        // Attach the APICaller actor to the player character
+        APICaller->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
+
+        // Call the API
+        APICaller->CallAPI(PlayerID);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("Failed to spawn APICaller actor"));
+    }
+}
+
 
 void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double TimeSeconds, uint64 FrameNumber, long long int TimeSec, long long int TimeNano)
 {

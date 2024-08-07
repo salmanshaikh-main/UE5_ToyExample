@@ -2,6 +2,7 @@
 
 #include "ThirdPersonGameMode.h"
 #include "UObject/ConstructorHelpers.h"
+#include "GameFramework/PlayerState.h"
 
 DEFINE_LOG_CATEGORY(LogThirdPersonGameMode);
 
@@ -34,28 +35,28 @@ AThirdPersonGameMode::AThirdPersonGameMode()
 }
 
 void AThirdPersonGameMode::PostLogin(APlayerController* NewPlayer)
-{	
-	Super::PostLogin(NewPlayer);
+{
+    Super::PostLogin(NewPlayer);
 
-	if (NewPlayer->IsLocalPlayerController())
-	{
-		return;
-	}
+    UNetConnection* IncomingNetConnection = Cast<UNetConnection>(NewPlayer->Player);
+    if (!IsValid(IncomingNetConnection))
+    {
+        UE_LOG(LogThirdPersonGameMode, Error, TEXT("Invalid IncomingNetConnection for player: %s"), *NewPlayer->GetName());
+        return;
+    }
 
-	UNetConnection* IncomingNetConnection = Cast<UNetConnection>(NewPlayer->Player);
+    TSharedPtr<const FInternetAddr> Addr = IncomingNetConnection->GetRemoteAddr();
+    if (!Addr.IsValid())
+    {
+        UE_LOG(LogThirdPersonGameMode, Error, TEXT("Invalid remote address for player: %s"), *NewPlayer->GetName());
+        return;
+    }
 
-	TSharedPtr<const FInternetAddr> Addr = IncomingNetConnection->GetRemoteAddr();
-	uint32 IPAddr;
-	Addr->GetIp(IPAddr);
-	UE_LOG(LogThirdPersonGameMode, Log, TEXT("IP: %d"), IPAddr);
+    FString IPAddressString = Addr->ToString(false);
+    UE_LOG(LogThirdPersonGameMode, Log, TEXT("Player IP Address: %s"), *IPAddressString);
 
-	if (!IsValid(IncomingNetConnection) || !IncomingNetConnection->PlayerId.IsValid())
-	{
-		UE_LOG(LogThirdPersonGameMode, Log, TEXT("incomingNetConnection not valid"));
-	}
-	else
-	{
-		UE_LOG(LogThirdPersonGameMode, Log, TEXT("incomingNetConnection not valid"));
-	}
+    uint32 IPAddr;
+    Addr->GetIp(IPAddr);
+    UE_LOG(LogThirdPersonGameMode, Log, TEXT("Player IP (as uint32): %u"), IPAddr);
 
 }

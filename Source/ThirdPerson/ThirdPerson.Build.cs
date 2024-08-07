@@ -8,6 +8,7 @@ public class ThirdPerson : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "Json" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "Json", "HTTP", "JsonUtilities" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "Sockets", "Networking" });
 	}
 }

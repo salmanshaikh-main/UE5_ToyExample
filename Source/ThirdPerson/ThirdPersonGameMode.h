@@ -19,5 +19,7 @@ public:
 	AThirdPersonGameMode();
 
 	virtual void PostLogin(APlayerController* NewPlayer) override;
+	UFUNCTION(BlueprintImplementableEvent, Category = "GameMode")
+    void OnPlayerPostLogin(APlayerController* NewPlayer);
 	
 };

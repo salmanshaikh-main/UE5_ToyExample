@@ -49,7 +49,6 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	
-	
+	AActor* ImpactedActor;
+    FVector ImpactedLocation;
 };

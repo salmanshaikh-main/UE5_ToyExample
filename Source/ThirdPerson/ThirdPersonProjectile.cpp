@@ -84,9 +84,16 @@ void AThirdPersonProjectile::Destroyed()
 
 void AThirdPersonProjectile::OnProjectileImpact(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-    if ( OtherActor )
+    if (OtherActor)
     {
+        ImpactedActor = OtherActor;
+        ImpactedLocation = Hit.ImpactPoint;  // Use Hit.ImpactPoint to get the location of the impact
         UGameplayStatics::ApplyPointDamage(OtherActor, Damage, NormalImpulse, Hit, GetInstigator()->Controller, this, DamageType);
+        
+        if (GetLocalRole() == ROLE_Authority)
+        {
+            UE_LOG(LogTemp, Log, TEXT("Projectile impacted actor: %s at location: %s"), *OtherActor->GetName(), *ImpactedLocation.ToString());
+        }
     }
 
     Destroy();

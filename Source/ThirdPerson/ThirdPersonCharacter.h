@@ -7,6 +7,9 @@
 #include "Logging/LogMacros.h"
 #include "UScenario.h"
 #include "Weapon.h"
+#include "GameFramework/PlayerState.h"
+#include "APIManager.h"
+#include "Runtime/Online/HTTP/Public/Http.h"
 #include "ThirdPersonCharacter.generated.h"
 
 class USpringArmComponent;
@@ -69,6 +72,9 @@ public:
 	/** Event for taking damage. Overridden from APawn.*/
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	float TakeDamage( float DamageTaken, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser ) override;
+
+    UFUNCTION(Server, Reliable)
+    void ServerRespawn(FVector RespawnLocation);
 
 	//UFUNCTION(Server, Reliable)
 	//void ServerPlayerDied();
@@ -143,8 +149,34 @@ protected:
 	UFUNCTION(Server, Reliable)
 	void HandleFire();
 
+	UFUNCTION(BlueprintCallable, Category = "API")
+	void APIRequest();
+
+	UFUNCTION(Server, Reliable)
+	void ServerCallAPI(const FString& PlayerID);
+
+// ----------------------------------------------------------------
+
+	// UFUNCTION(BlueprintCallable, Category = "SuperpowerClient")
+	// bool IsPythonInstalled();
+
+	// UFUNCTION(BlueprintCallable, Category = "SuperpowerClient")
+	// void ExecuteScript();
+	UFUNCTION(BlueprintCallable, Category = "Superpower")
+	void CallRunningService();
+
+	void OnServiceResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+
+	UFUNCTION(BlueprintCallable, Category = "Superpower")
+    void ActivateSuperpower();
+	
+
 	/** A timer handle used for providing the fire rate delay in-between spawns.*/
 	FTimerHandle FiringTimer;
+
+	void LogMovement();
+	FString GetPlayerIdentifier() const;
+
 
 
 public:
@@ -152,4 +184,8 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+private:
+	UPROPERTY()
+    UAPIManager* APIManager;
 };
