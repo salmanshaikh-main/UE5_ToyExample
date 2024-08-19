@@ -3,6 +3,9 @@
 #include "ThirdPersonGameMode.h"
 #include "UObject/ConstructorHelpers.h"
 #include "GameFramework/PlayerState.h"
+#include "GameFramework/GameSession.h"
+#include "Engine/Engine.h"
+#include "CustomPlayerController.h"
 
 DEFINE_LOG_CATEGORY(LogThirdPersonGameMode);
 
@@ -59,4 +62,32 @@ void AThirdPersonGameMode::PostLogin(APlayerController* NewPlayer)
     Addr->GetIp(IPAddr);
     UE_LOG(LogThirdPersonGameMode, Log, TEXT("Player IP (as uint32): %u"), IPAddr);
 
+}
+
+void AThirdPersonGameMode::SimulateDoSAttack(APlayerController* TargetedPlayerController, int OutLossRate, int InLossRate, float Duration)
+{
+    if (!TargetedPlayerController || !GetWorld())
+    {
+        UE_LOG(LogTemp, Error, TEXT("Invalid PlayerController or World"));
+        return;
+    }
+    if (AThirdPersonCharacter* TargetedCharacter = Cast<AThirdPersonCharacter>(TargetedPlayerController->GetPawn()))
+    {
+        TargetedCharacter->Client_SetPacketLoss(OutLossRate, InLossRate);
+            // UE_LOG(LogTemp, Log, TEXT("Starting packet loss simulation on player: %s. Loss Rate: %f%%"), 
+            //    *TargetedPlayerController->GetName(), LossRate);
+    }
+    // Set a timer to stop the simulation
+    FTimerHandle TimerHandle;
+	GetWorldTimerManager().SetTimer(TimerHandle, [this, TargetedPlayerController]()
+	{
+		if (TargetedPlayerController && TargetedPlayerController->IsValidLowLevel())
+		{
+			if (AThirdPersonCharacter* TargetedCharacter = Cast<AThirdPersonCharacter>(TargetedPlayerController->GetPawn()))
+			{
+				TargetedCharacter->Client_SetPacketLoss(0, 0);
+				// UE_LOG(LogTemp, Log, TEXT("Packet loss simulation ended for player: %s"), *TargetedPlayerController->GetName());
+			}
+		}
+	}, Duration, false);
 }
