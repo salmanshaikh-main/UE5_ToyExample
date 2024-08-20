@@ -10,6 +10,8 @@
 #include "GameFramework/PlayerState.h"
 #include "APIManager.h"
 #include "Runtime/Online/HTTP/Public/Http.h"
+#include "DrawDebugHelpers.h"
+#include "Kismet/GameplayStatics.h"
 #include "ThirdPersonCharacter.generated.h"
 
 class USpringArmComponent;
@@ -69,6 +71,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Health")
 	void SetCurrentHealth(float healthValue);
 
+	UFUNCTION(BlueprintCallable, Category="Test")
+	void SubmitButton(const FString& PlayerInput);
+
+    // Server RPC to handle the input on the server
+    UFUNCTION(Server, Reliable)
+    void ServerHandlePlayerInput(const FString& PlayerInput);
+
+	// Client RPC to notify the player
+    UFUNCTION(Client, Reliable)
+    void ClientNotifyValidInput(const FString& Message);
+
+	UFUNCTION(Client, Reliable)
+	void TargetedClientReceiveMessage(const FString& Message);
+
 	/** Event for taking damage. Overridden from APawn.*/
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	float TakeDamage( float DamageTaken, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser ) override;
@@ -78,6 +94,23 @@ public:
 
 	//UFUNCTION(Server, Reliable)
 	//void ServerPlayerDied();
+    // Hit-scan weapon properties
+    UPROPERTY(EditDefaultsOnly, Category="Gameplay|Weapon")
+    float HitScanRange = 10000.f;
+
+    UPROPERTY(EditDefaultsOnly, Category="Gameplay|Weapon")
+    float HitScanDamage = 5.f;
+
+    // Function to fire the hit-scan weapon
+    UFUNCTION(BlueprintCallable, Category="Gameplay")
+    void FireHitScanWeapon();
+
+    // Server RPC for hit-scan weapon damage validation
+    UFUNCTION(Server, Reliable, WithValidation)
+    void ServerValidateHitScanDamage(AActor* HitActor, FVector_NetQuantize HitLocation);
+
+	UFUNCTION(Client, Reliable)
+	void Client_SetPacketLoss(int OutLossRate, int InLossRate);
 
 
 protected:
@@ -127,9 +160,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="Gameplay|Projectile")
 	TSubclassOf<class AThirdPersonProjectile> ProjectileClass;
 
-	UPROPERTY(Replicated)
-	AWeapon* HitScanWeapon;
-
 	/** Delay between shots in seconds. Used to control fire rate for your test projectile, but also to prevent an overflow of server functions from binding SpawnProjectile directly to input.*/
 	UPROPERTY(EditDefaultsOnly, Category="Gameplay")
 	float FireRate;
@@ -147,7 +177,7 @@ protected:
 
 	/** Server function for spawning projectiles.*/
 	UFUNCTION(Server, Reliable)
-	void HandleFire();
+	void HandleFire(const FVector& spawnLocation, const FRotator& spawnRotation);
 
 	UFUNCTION(BlueprintCallable, Category = "API")
 	void APIRequest();
@@ -177,6 +207,20 @@ protected:
 	void LogMovement();
 	FString GetPlayerIdentifier() const;
 
+	// Debug line draw duration
+    UPROPERTY(EditDefaultsOnly, Category="Gameplay|Debug")
+    float DebugDrawDuration = 0.15f;
+
+	//dossss
+	UFUNCTION()
+	void ClientInvokeRPC();
+
+	// Function to request player IDs from the server
+	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "Superpower")
+	void GetIds();
+
+	UFUNCTION(Client, Reliable)
+	void PlayerRecIds(const FString& Ids);
 
 
 public:
@@ -189,3 +233,5 @@ private:
 	UPROPERTY()
     UAPIManager* APIManager;
 };
+
+
