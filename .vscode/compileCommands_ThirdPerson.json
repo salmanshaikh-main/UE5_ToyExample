@@ -8,6 +8,38 @@
 		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
 	},
 	{
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/APICallerActor.cpp",
+		"arguments": [
+			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
+		],
+		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
+	},
+	{
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/APICallerActor.h",
+		"arguments": [
+			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
+		],
+		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
+	},
+	{
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/APIManager.cpp",
+		"arguments": [
+			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
+		],
+		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
+	},
+	{
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/APIManager.h",
+		"arguments": [
+			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
+		],
+		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
+	},
+	{
 		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/CustomPlayerController.cpp",
 		"arguments": [
 			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
@@ -33,6 +65,38 @@
 	},
 	{
 		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/Logger.h",
+		"arguments": [
+			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
+		],
+		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
+	},
+	{
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/MyActPlg.cpp",
+		"arguments": [
+			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
+		],
+		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
+	},
+	{
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/MyActPlg.h",
+		"arguments": [
+			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
+		],
+		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
+	},
+	{
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/MyUserWidget.cpp",
+		"arguments": [
+			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
+		],
+		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
+	},
+	{
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/MyUserWidget.h",
 		"arguments": [
 			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
 			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
@@ -144,7 +208,15 @@
 		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
 	},
 	{
-		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/scene1.json",
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/attacker_scene.json",
+		"arguments": [
+			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"
+		],
+		"directory": "/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Source"
+	},
+	{
+		"file": "/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/Source/ThirdPerson/victim_scene.json",
 		"arguments": [
 			"/home/shais0a/Downloads/UnrealEngine-5.3.2-release/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v22_clang-16.0.6-centos7/x86_64-unknown-linux-gnu/bin/clang++",
 			"@/home/shais0a/Documents/Unreal Projects/Thesis/LATEST_GAME/UE-Multiplayer-Game-To-Hack/.vscode/compileCommands_ThirdPerson/ThirdPerson.1.rsp"

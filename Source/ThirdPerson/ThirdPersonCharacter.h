@@ -22,6 +22,14 @@ struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
+// UENUM(BlueprintType)
+// enum class ELoggingPreference : uint8
+// {
+// 	None UMETA(DisplayName = "None"),
+// 	Moderate UMETA(DisplayName = "Moderate"),
+// 	Comprehensive UMETA(DisplayName = "Comprehensive")
+// };
+
 UCLASS(config = Game)
 class AThirdPersonCharacter : public ACharacter
 {
@@ -105,6 +113,22 @@ public:
     UFUNCTION(BlueprintCallable, Category="Gameplay")
     void FireHitScanWeapon();
 
+	UFUNCTION()
+	void Aimbot();
+
+	UFUNCTION()
+	void AimbotTick();
+
+	UFUNCTION()
+	void FindTargetInFOV();
+
+	UFUNCTION()
+    void AimAtTarget();
+
+	UFUNCTION()
+    void StopAimbot();
+	
+
     // Server RPC for hit-scan weapon damage validation
     UFUNCTION(Server, Reliable, WithValidation)
     void ServerValidateHitScanDamage(AActor* HitActor, FVector_NetQuantize HitLocation);
@@ -112,6 +136,54 @@ public:
 	UFUNCTION(Client, Reliable)
 	void Client_SetPacketLoss(int OutLossRate, int InLossRate);
 
+	UFUNCTION()
+	void SetLogPaths();
+
+	//ELoggingPreference LoggingPreference;
+
+	// double ClientTime;
+
+	// UFUNCTION()
+	// void ClientSendTime();
+
+	// UFUNCTION(Server, Reliable)
+	// void ServerReceiveTime(double Time);
+
+	UPROPERTY()
+	double SpawnTime = 0.0;
+
+	UFUNCTION()
+	void MainLogger();
+
+	UFUNCTION()
+	void SendClientLogData();
+
+	UFUNCTION(Server, Reliable)
+    void ServerReceiveLogData(const FString& LogData);
+
+	UFUNCTION()
+	void ArtLag();
+
+	UFUNCTION()
+	void RevertArtLag();
+
+	FTimerHandle ClientTimerHandle;
+	FTimerHandle ServerTimerHandle;
+
+	UFUNCTION()
+	void RevertClientLogInterval();
+
+	UFUNCTION()
+	void SetClientLogInterval(double ClientTime);
+
+	UFUNCTION(Server, Reliable)
+	void RevertServerLogInterval();
+
+	UFUNCTION(Server, Reliable)
+	void SetServerLogInterval(double ServerTime);
+
+	// UFUNCTION()
+	// void ServerJson(double Time, FString PlayerID, FVector PlayerLocation, const FString& FilePath);
 
 protected:
 	/** Called every tick, used for auto movement */
@@ -187,7 +259,7 @@ protected:
 
 // ----------------------------------------------------------------
 
-	// UFUNCTION(BlueprintCallable, Category = "SuperpowerClient")
+	// UFUNCTION(BlueprintCallable, Category = "Superpower_S")
 	// bool IsPythonInstalled();
 
 	// UFUNCTION(BlueprintCallable, Category = "SuperpowerClient")
@@ -232,6 +304,42 @@ public:
 private:
 	UPROPERTY()
     UAPIManager* APIManager;
+
+	AThirdPersonCharacter* ClosestEnemy;
+
+	UFUNCTION()
+    void OnRep_ReplicatedRotation();
+    
+	// Replicated variable to store the character's rotation
+    UPROPERTY(ReplicatedUsing=OnRep_ReplicatedRotation)
+    FRotator ReplicatedRotation;
+
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerSetRotation(FRotator NewRotation);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void NetMulticastSetRotation(FRotator NewRotation);
+
+    AThirdPersonCharacter* CurrentTarget;
+    FTimerHandle AimbotTickTimerHandle;
+    FTimerHandle AimbotStopTimerHandle;
+    float AimbotFOV = 45.0f;
+    float AimbotMaxDistance = 10000.0f;
+    float AimbotDuration = 5.0f; // Duration in seconds before auto-stop
+
+	float TimeSinceLastLog = 0.0f;
+	float LogInterval;
+
+	float TimeSinceLastSend = 0.0f;
+	float SendInterval;
+
+	UPROPERTY() 
+	FString PlayerNameForServerLog;
+
+	UPROPERTY() 
+	FString PlayerNameForClientLog;
+
+	bool bHasSetLogPaths = false;
 };
 
 
