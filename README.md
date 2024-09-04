@@ -11,3 +11,10 @@
   ./Binaries/Win64/ThirdPersonServer.exe -log
   ./Binaries/Win64/ThirdPersonClient.exe 127.0.0.1:7777 -WINDOWED -ResX=800 -ResY=450 -log -Path="/optional/path/to/scenario/file/"
   ```
+## To use in Windows:
+1. Clone the repo
+2. Build the project using Visual Studio
+3. Cook using the Editor (if need be)
+
+## To use in Mac:
+Same steps as in linux (but change Linux tags to Mac)
