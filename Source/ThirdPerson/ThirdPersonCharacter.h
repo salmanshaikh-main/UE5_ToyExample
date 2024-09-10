@@ -162,7 +162,10 @@ public:
     void ServerReceiveLogData(const FString& LogData);
 
 	UFUNCTION()
-	void ArtLag();
+	void LagSwitchFunc();
+
+	UFUNCTION()
+	void FixedDelayFunc();
 
 	UFUNCTION()
 	void RevertArtLag();

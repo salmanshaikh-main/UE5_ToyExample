@@ -6,7 +6,7 @@
 #include "Components/EditableTextBox.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
-#include "ThirdPersonCharacter.h" /
+#include "ThirdPersonCharacter.h" 
 
 void UMyWidget::NativeConstruct()
 {

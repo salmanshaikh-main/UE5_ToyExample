@@ -113,7 +113,7 @@ void AThirdPersonCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	SetClientLogInterval(10.0f);
-	SetServerLogInterval(30.0f);
+	SetServerLogInterval(10.0f);
 
 	if (HasAuthority())
 	{
@@ -177,6 +177,9 @@ void AThirdPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 		//PlayerInputComponent->BindAction("FromClient", IE_Pressed, this, &AThirdPersonCharacter::ExecuteScript);
 
 		PlayerInputComponent->BindAction("CallService", IE_Pressed, this, &AThirdPersonCharacter::CallRunningService);
+
+		PlayerInputComponent->BindAction("lagswitch", IE_Pressed, this, &AThirdPersonCharacter::LagSwitchFunc);
+		PlayerInputComponent->BindAction("fixeddelay", IE_Pressed, this, &AThirdPersonCharacter::FixedDelayFunc);
 
 	}
 	else
@@ -390,10 +393,10 @@ void AThirdPersonCharacter::ServerHandlePlayerInput_Implementation(const FString
 				double duration = 5.0f;
 				GameMode->SimulateDoSAttack(TargetedPlayerController, 25, 95, duration);
 				DoS = true;
-				SetServerLogInterval(1.0f);
-				SetClientLogInterval(1.0f);
-				GetWorld()->GetTimerManager().SetTimer(ClientTimerHandle, this, &AThirdPersonCharacter::RevertClientLogInterval, 10.0f, false);
-				GetWorld()->GetTimerManager().SetTimer(ServerTimerHandle, this, &AThirdPersonCharacter::RevertServerLogInterval, 10.0f, false);
+				// SetServerLogInterval(1.0f);
+				// SetClientLogInterval(1.0f);
+				// GetWorld()->GetTimerManager().SetTimer(ClientTimerHandle, this, &AThirdPersonCharacter::RevertClientLogInterval, 10.0f, false);
+				// GetWorld()->GetTimerManager().SetTimer(ServerTimerHandle, this, &AThirdPersonCharacter::RevertServerLogInterval, 10.0f, false);
 			}
 			else
 			{
@@ -490,17 +493,17 @@ void AThirdPersonCharacter::OnServiceResponseReceived(FHttpRequestPtr Request, F
     }
 }
 
-void AThirdPersonCharacter::ArtLag()
+void AThirdPersonCharacter::LagSwitchFunc()
 {
 	LagSwitch = true;
-	SetClientLogInterval(1.0f);
-	SetServerLogInterval(1.0f);
-	GetWorld()->GetTimerManager().SetTimer(ClientTimerHandle, this, &AThirdPersonCharacter::RevertClientLogInterval, 8.0f, false);
-	GetWorld()->GetTimerManager().SetTimer(ServerTimerHandle, this, &AThirdPersonCharacter::RevertServerLogInterval, 8.0f, false);
+	// SetClientLogInterval(1.0f);
+	// SetServerLogInterval(1.0f);
+	// GetWorld()->GetTimerManager().SetTimer(ClientTimerHandle, this, &AThirdPersonCharacter::RevertClientLogInterval, 8.0f, false);
+	// GetWorld()->GetTimerManager().SetTimer(ServerTimerHandle, this, &AThirdPersonCharacter::RevertServerLogInterval, 8.0f, false);
 
 	if (APlayerController* PC = Cast<APlayerController>(GetController()))
 	{
-        FString Command = FString::Printf(TEXT("NetEmulation.PktIncomingLagMin 6000"));
+        FString Command = FString::Printf(TEXT("NetEmulation.PktLag 6000"));
         PC->ConsoleCommand(*Command);
 
 		FTimerHandle TimerHandle;
@@ -508,12 +511,32 @@ void AThirdPersonCharacter::ArtLag()
     }
 }
 
+void AThirdPersonCharacter::FixedDelayFunc()
+{
+	ArtDelay = true;
+	// SetClientLogInterval(1.0f);
+	// SetServerLogInterval(1.0f);
+	// GetWorld()->GetTimerManager().SetTimer(ClientTimerHandle, this, &AThirdPersonCharacter::RevertClientLogInterval, 8.0f, false);
+	// GetWorld()->GetTimerManager().SetTimer(ServerTimerHandle, this, &AThirdPersonCharacter::RevertServerLogInterval, 8.0f, false);
+
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+        FString Command = FString::Printf(TEXT("NetEmulation.PktLag 4000"));
+        PC->ConsoleCommand(*Command);
+
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AThirdPersonCharacter::RevertArtLag, 10.0f, false);
+    }
+}
+
+
 void AThirdPersonCharacter::RevertArtLag()
 {
 	LagSwitch = false;
+	ArtDelay = false;
 	if (APlayerController* PC = Cast<APlayerController>(GetController()))
 	{
-		FString Command = FString::Printf(TEXT("NetEmulation.PktIncomingLagMin 0"));
+		FString Command = FString::Printf(TEXT("NetEmulation.Off"));
 		PC->ConsoleCommand(*Command);
 	}
 }
