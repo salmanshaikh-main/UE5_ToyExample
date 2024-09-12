@@ -6,9 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "UScenario.h"
-#include "Weapon.h"
 #include "GameFramework/PlayerState.h"
-#include "APIManager.h"
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
@@ -79,6 +77,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Health")
 	void SetCurrentHealth(float healthValue);
 
+	////////////////////////////////////////////////////////
+	/** Denial of Service */ 
+
+	/*On clicking Submit (after opening UI to input player's tag or IP)*/
 	UFUNCTION(BlueprintCallable, Category="Test")
 	void SubmitButton(const FString& PlayerInput);
 
@@ -90,8 +92,15 @@ public:
     UFUNCTION(Client, Reliable)
     void ClientNotifyValidInput(const FString& Message);
 
+	// ClientRPC to show the message on the screen
 	UFUNCTION(Client, Reliable)
 	void TargetedClientReceiveMessage(const FString& Message);
+
+	// Setting packet losses at targeted victim
+	UFUNCTION(Client, Reliable)
+	void Client_SetPacketLoss(int OutLossRate, int InLossRate);
+
+	/////////////////////////////////////////////////////////////////////////////
 
 	/** Event for taking damage. Overridden from APawn.*/
 	UFUNCTION(BlueprintCallable, Category = "Health")
@@ -132,9 +141,6 @@ public:
     // Server RPC for hit-scan weapon damage validation
     UFUNCTION(Server, Reliable, WithValidation)
     void ServerValidateHitScanDamage(AActor* HitActor, FVector_NetQuantize HitLocation);
-
-	UFUNCTION(Client, Reliable)
-	void Client_SetPacketLoss(int OutLossRate, int InLossRate);
 
 	UFUNCTION()
 	void SetLogPaths();
@@ -254,12 +260,6 @@ protected:
 	UFUNCTION(Server, Reliable)
 	void HandleFire(const FVector& spawnLocation, const FRotator& spawnRotation);
 
-	UFUNCTION(BlueprintCallable, Category = "API")
-	void APIRequest();
-
-	UFUNCTION(Server, Reliable)
-	void ServerCallAPI(const FString& PlayerID);
-
 // ----------------------------------------------------------------
 
 	// UFUNCTION(BlueprintCallable, Category = "Superpower_S")
@@ -271,9 +271,6 @@ protected:
 	void CallRunningService();
 
 	void OnServiceResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
-
-	UFUNCTION(BlueprintCallable, Category = "Superpower")
-    void ActivateSuperpower();
 	
 
 	/** A timer handle used for providing the fire rate delay in-between spawns.*/
@@ -305,9 +302,6 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 private:
-	UPROPERTY()
-    UAPIManager* APIManager;
-
 	AThirdPersonCharacter* ClosestEnemy;
 
 	UFUNCTION()
@@ -317,7 +311,10 @@ private:
     UPROPERTY(ReplicatedUsing=OnRep_ReplicatedRotation)
     FRotator ReplicatedRotation;
 
-	UFUNCTION(Server, Reliable, WithValidation)
+	UFUNCTION()
+	void SetRotation(FRotator NewRotation);
+
+	UFUNCTION(Server, Unreliable)
 	void ServerSetRotation(FRotator NewRotation);
 
 	UFUNCTION(NetMulticast, Reliable)

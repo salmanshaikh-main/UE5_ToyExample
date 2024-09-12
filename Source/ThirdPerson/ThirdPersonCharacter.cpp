@@ -2,7 +2,6 @@
 #include "Engine/LocalPlayer.h"
 #include "Engine/Engine.h"
 #include "ThirdPersonProjectile.h"
-#include "APICallerActor.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -103,8 +102,6 @@ AThirdPersonCharacter::AThirdPersonCharacter()
     //Initialize fire rate
     FireRate = 0.25f;
     bIsFiringWeapon = false;
-
-	APIManager = CreateDefaultSubobject<UAPIManager>(TEXT("APIManager"));
 }
 
 void AThirdPersonCharacter::BeginPlay()
@@ -541,14 +538,6 @@ void AThirdPersonCharacter::RevertArtLag()
 	}
 }
 
-void AThirdPersonCharacter::ActivateSuperpower()
-{
-    if (APIManager)
-    {
-        APIManager->ActivateSuperpower();
-    }
-}
-
 
 void AThirdPersonCharacter::Move(const FInputActionValue& Value)
 {
@@ -966,43 +955,6 @@ void AThirdPersonCharacter::HandleFire_Implementation(const FVector& spawnLocati
 
 }
 
-void AThirdPersonCharacter::APIRequest()
-{
-	FString PlayerID;
-    // Assuming you have a way to get the PlayerID, e.g., from the PlayerState
-	APlayerState* PS = GetPlayerState();
-	PlayerID = PS->GetPlayerName();
-
-    ServerCallAPI(PlayerID);
-}
-
-
-void AThirdPersonCharacter::ServerCallAPI_Implementation(const FString& PlayerID)
-{
-    // This function will only be executed on the server
-    UE_LOG(LogTemp, Log, TEXT("ServerCallAPI_Implementation for Player called on server side %s"), *PlayerID);
-	//FVector PlayerLocation = GetActorLocation();
-    
-    // Spawn the APICaller actor
-    FActorSpawnParameters SpawnParams;
-    SpawnParams.Owner = this;
-    SpawnParams.Instigator = GetInstigator();
-
-    AAPICallerActor* APICaller = GetWorld()->SpawnActor<AAPICallerActor>(AAPICallerActor::StaticClass(), GetActorLocation(), GetActorRotation(), SpawnParams);
-    if (APICaller)
-    {
-        // Attach the APICaller actor to the player character
-        APICaller->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
-
-        // Call the API
-        APICaller->CallAPI(PlayerID);
-    }
-    else
-    {
-        UE_LOG(LogTemp, Error, TEXT("Failed to spawn APICaller actor"));
-    }
-}
-
 
 void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double TimeSeconds, uint64 FrameNumber, long long int TimeSec, long long int TimeNano)
 {
@@ -1108,6 +1060,7 @@ void AThirdPersonCharacter::OnRep_ReplicatedRotation()
 
 void AThirdPersonCharacter::Aimbot()
 {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Aimbot activated!"));
     // Start the aimbot process
     GetWorldTimerManager().SetTimer(AimbotTickTimerHandle, this, &AThirdPersonCharacter::AimbotTick, 0.016f, true);
 
@@ -1126,6 +1079,7 @@ void AThirdPersonCharacter::AimbotTick()
 
 void AThirdPersonCharacter::FindTargetInFOV()
 {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Finding target in FOV!"));
     CurrentTarget = nullptr;
     float ClosestDistSq = FLT_MAX;
     
@@ -1169,6 +1123,7 @@ void AThirdPersonCharacter::FindTargetInFOV()
 
 void AThirdPersonCharacter::AimAtTarget()
 {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Aiming at target!"));
     if (!CurrentTarget)
         return;
 
@@ -1186,11 +1141,12 @@ void AThirdPersonCharacter::AimAtTarget()
     // Set the new rotation
     Controller->SetControlRotation(SmoothedRotation);
 
-    // Replicate to server
-    ServerSetRotation(SmoothedRotation);
+    SetRotation(SmoothedRotation);
+	ServerSetRotation(SmoothedRotation);
+
 }
 
-void AThirdPersonCharacter::ServerSetRotation_Implementation(FRotator NewRotation)
+void AThirdPersonCharacter::SetRotation(FRotator NewRotation)
 {
     // Update rotation on the server
     SetActorRotation(NewRotation);
@@ -1200,9 +1156,9 @@ void AThirdPersonCharacter::ServerSetRotation_Implementation(FRotator NewRotatio
     NetMulticastSetRotation(NewRotation);
 }
 
-bool AThirdPersonCharacter::ServerSetRotation_Validate(FRotator NewRotation)
+void AThirdPersonCharacter::ServerSetRotation_Implementation(FRotator NewRotation)
 {
-    return true;
+	SetRotation(NewRotation);
 }
 
 void AThirdPersonCharacter::NetMulticastSetRotation_Implementation(FRotator NewRotation)
