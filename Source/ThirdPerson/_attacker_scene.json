@@ -28,31 +28,5 @@
         "Duration":1.5,
         "X":276.39,
         "Y":-64.97
-    },
-    "Shoot0": {
-        "Timestamp": 20.0,  
-        "Button": "Right"
-    },
-    "Shoot1": {
-        "Timestamp": 20.5,  
-        "Button": "Right"
-    },
-    "Shoot2": {
-        "Timestamp": 21.0,  
-        "Button": "Left"
-    },
-    "Shoot3": {
-        "Timestamp": 21.5,  
-        "Button": "Left"
-    },
-    "Shoot4": {
-        "Timestamp": 22.0,  
-        "Button": "Right"
-    },
-    "Move5":{
-        "Timestamp": 22.5,
-        "Duration": 4.5,
-        "X": 1176.39,
-        "Y": -64.97
     }
 }

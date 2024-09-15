@@ -1,5 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+// Configuration script for an Unreal Engine project. This script is used to define the dependencies of the project.
+
 using UnrealBuildTool;
 
 public class ThirdPerson : ModuleRules

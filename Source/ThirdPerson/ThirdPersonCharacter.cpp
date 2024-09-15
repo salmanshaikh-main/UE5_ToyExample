@@ -1,14 +1,19 @@
 #include "ThirdPersonCharacter.h"
-#include "Engine/LocalPlayer.h"
-#include "Engine/Engine.h"
+#include "ThirdPersonGameMode.h"
 #include "ThirdPersonProjectile.h"
-#include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Net/UnrealNetwork.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/GameModeBase.h"
+#include "GameFramework/PlayerController.h"
+#include "GameFramework/PlayerState.h"
+#include "GameFramework/GameSession.h"
+#include "Engine/LocalPlayer.h"
+#include "Engine/Engine.h"
+#include "Engine/World.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
@@ -16,29 +21,25 @@
 #include "Serialization/JsonWriter.h"
 #include "Serialization/JsonSerializer.h"
 #include "Misc/FileHelper.h"
+#include "Misc/DateTime.h"
+#include "Kismet/KismetSystemLibrary.h" 
+#include "DrawDebugHelpers.h"
+#include "HAL/PlatformProcess.h"
+#include "Blueprint/UserWidget.h"  
+#include "Kismet/GameplayStatics.h"  
+#include "Sockets.h"
+#include "IPAddress.h"
+#include "Networking.h"
+#include "EngineUtils.h"
 #include <iostream>
 #include <fstream> 
 #include <ctime>
 #include <chrono>
-#include "Misc/DateTime.h"
-#include "Kismet/KismetSystemLibrary.h" 
-#include "Engine/World.h"
-#include "DrawDebugHelpers.h"
-#include "HAL/PlatformProcess.h"
-#include "Blueprint/UserWidget.h"  // For UUserWidget
-#include "Kismet/GameplayStatics.h"  // For UGameplayStatics
-#include "Sockets.h"
-#include "IPAddress.h"
-#include "ThirdPersonGameMode.h"
-#include "Networking.h"
-#include "GameFramework/PlayerController.h"
-#include "EngineUtils.h"
-#include "GameFramework/PlayerState.h"
-#include "GameFramework/GameSession.h"
 
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
+// Declare variables to be used throughout the class 
 FString FullServerFilePath;
 FString FullClientFilePath;
 FString ServerPath;
@@ -53,10 +54,9 @@ bool RecIDs = false;
 bool DoS = false;
 bool AimBot = false;
 
-
 double SpawnTime;
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 // AThirdPersonCharacter
 
 AThirdPersonCharacter::AThirdPersonCharacter()
@@ -99,6 +99,7 @@ AThirdPersonCharacter::AThirdPersonCharacter()
 
 	//Initialize projectile class
     ProjectileClass = AThirdPersonProjectile::StaticClass();
+
     //Initialize fire rate
     FireRate = 0.25f;
     bIsFiringWeapon = false;
@@ -109,6 +110,7 @@ void AThirdPersonCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	// Set the log interval (based on what player sets)
 	SetClientLogInterval(10.0f);
 	SetServerLogInterval(10.0f);
 
@@ -118,8 +120,6 @@ void AThirdPersonCharacter::BeginPlay()
 		SpawnTime = GetWorld()->GetTimeSeconds();
 	}
 
-	//LoggingPreference = ELoggingPreference::Comprehensive;
-
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -128,26 +128,19 @@ void AThirdPersonCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-	
-	//OnHealthUpdate();
-	
-	// Init the Scenario
-	Scenario.InitializeScenarioFromArgs();
 
-	FString CurrentTime = FDateTime::Now().ToString(TEXT("%H:%M:%S"));
-
-
+	// As of now, no close enemy (aimbot config)
 	ClosestEnemy = nullptr;
 }
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 // Input
 
 void AThirdPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
-
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) 
+	{
 		// Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
@@ -164,20 +157,21 @@ void AThirdPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 		// Handle hit scan fires
 		PlayerInputComponent->BindAction("FireHitScan", IE_Pressed, this, &AThirdPersonCharacter::FireHitScanWeapon);
 
+		// Handle getting IDs of connected players
 		PlayerInputComponent->BindAction("DoS", IE_Pressed, this, &AThirdPersonCharacter::ClientInvokeRPC);
+		// Invoking of UI after getting IDs is done by another button specified in blueprints and widgets
 
-		PlayerInputComponent->BindAction("Aimbot", IE_Pressed, this, &AThirdPersonCharacter::Aimbot);
-
-		//widget
-		//PlayerInputComponent->BindAction("BringWidgetUp", IE_Pressed, this, &AThirdPersonCharacter::ShowTextInputWidget);
-	//--------------------------------------------------------------------------------------------------------------------------------
-		//PlayerInputComponent->BindAction("FromClient", IE_Pressed, this, &AThirdPersonCharacter::ExecuteScript);
-
-		PlayerInputComponent->BindAction("CallService", IE_Pressed, this, &AThirdPersonCharacter::CallRunningService);
-
+		// Handle setting Lag Switch configuration
 		PlayerInputComponent->BindAction("lagswitch", IE_Pressed, this, &AThirdPersonCharacter::LagSwitchFunc);
+
+		// Handle setting Fixed Delay configuration
 		PlayerInputComponent->BindAction("fixeddelay", IE_Pressed, this, &AThirdPersonCharacter::FixedDelayFunc);
 
+	    // Handle starting of Aimbot
+		PlayerInputComponent->BindAction("Aimbot", IE_Pressed, this, &AThirdPersonCharacter::Aimbot);
+
+		// Handle calling of local service running in the background (if set up)
+		PlayerInputComponent->BindAction("CallService", IE_Pressed, this, &AThirdPersonCharacter::CallRunningService);
 	}
 	else
 	{
@@ -185,60 +179,134 @@ void AThirdPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	}
 }
 
+// Replicated Properties
+void AThirdPersonCharacter::GetLifetimeReplicatedProps(TArray <FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-// bool AThirdPersonCharacter::IsPythonInstalled()
-// {
-//     FString Command = TEXT("python --version");
-//     #if !PLATFORM_WINDOWS
-//         Command = TEXT("python3 --version");
-//     #endif
-//     int32 ReturnCode = 0;
-//     FString StdOut;
-//     FString StdErr;
-//     FPlatformProcess::ExecProcess(*Command, nullptr, &ReturnCode, &StdOut, &StdErr);
-//     return ReturnCode == 0;
-// }
+	//Replicate current health.
+	DOREPLIFETIME(AThirdPersonCharacter, CurrentHealth);
+	//Replicate current rotation. (activation of aimbot)
+	DOREPLIFETIME(AThirdPersonCharacter, ReplicatedRotation);
+}
 
-// void AThirdPersonCharacter::ExecuteScript()
-// {
-//     FString ScriptPath;
+void AThirdPersonCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 
-// #if PLATFORM_WINDOWS
-//     ScriptPath = FPaths::Combine(FPaths::ProjectDir(), TEXT("Scripts/example_script.bat"));
-// #elif PLATFORM_LINUX
-//     ScriptPath = FPaths::Combine(FPaths::ProjectDir(), TEXT("Scripts/example_script.sh"));
-//     // ScriptPath = FPaths::ConvertRelativePathToFull(ScriptPath); // Convert to absolute path
-//     // FString Command = TEXT("python3");
-//     // FString QuotedScriptPath = FString::Printf(TEXT("\"%s\""), *ScriptPath); // Enclose path in quotes
-//     // TArray<FString> Arguments;
-//     // Arguments.Add(QuotedScriptPath);
-// #elif PLATFORM_MAC
-//     ScriptPath = FPaths::Combine(FPaths::ProjectDir(), TEXT("Scripts/example_script.sh"));
-// #else
-//     UE_LOG(LogTemp, Warning, TEXT("Unsupported platform!"));
-//     return;
-// #endif
+	// Call SetLogPaths() only once
+	if (!bHasSetLogPaths)
+	{
+		SetLogPaths();
+		bHasSetLogPaths = true;
+		if (HasAuthority()) 
+		{
+			// if this tag present in the command line, then set the server log path
+			if (FParse::Param(FCommandLine::Get(), TEXT("mainServerLog"))) 
+			{
+				MainServerPath = FPaths::Combine(TEXT("../../Logs/"), *PlayerNameForServerLog + FString(TEXT(".json")));
+			}
+		}
+		else 
+		{
+			// if this tag present in the command line, then set the client log path
+			if (FParse::Param(FCommandLine::Get(), TEXT("mainClientLog"))) {
+				MainClientPath = FPaths::Combine(TEXT("../../Logs/"), *PlayerNameForClientLog + FString(TEXT(".json")));
+			}
+		}
+	}
 
-// 	if (FPaths::FileExists(ScriptPath))
-// 	{
-// 		FProcHandle ProcessHandle = FPlatformProcess::CreateProc(*Command, *Arguments[0], true, false, false, nullptr, 0, nullptr, nullptr);
-		
-// 		if (!ProcessHandle.IsValid())
-// 		{
-// 			UE_LOG(LogTemp, Warning, TEXT("Failed to start process: %s"), *ScriptPath);
-// 		}
-// 		else
-// 		{
-// 			UE_LOG(LogTemp, Warning, TEXT("Script executed successfully: %s"), *ScriptPath);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		UE_LOG(LogTemp, Warning, TEXT("Script file does not exist: %s"), *ScriptPath);
-// 	}
-// }
+	// Get current world
+	UWorld* World = GetWorld();
 
+	// Get current player location
+	FVector PlayerLocation = GetActorLocation();
 
+	// Print location string to screen for debugging
+	//FString LocationString = FString::Printf(TEXT("Current Location: X=%.2f Y=%.2f Z=%.2f"), PlayerLocation.X, PlayerLocation.Y, PlayerLocation.Z);
+    //GEngine->AddOnScreenDebugMessage(1, 0.f, FColor::Yellow, LocationString);
+
+    //////////////////////////////////////////////////////////////////////////
+	/** JSON file automated movements */
+	double timeSeconds = World->GetTimeSeconds();
+	FVector Vector;
+	Vector = Scenario.GetMove(timeSeconds, PlayerLocation);
+	
+	// If vector is zero, send one last move to the last position
+	if (!Vector.IsZero())
+	{
+		MoveToPosition(Vector);
+	}
+
+	// Time since the last entry is logged (Log Interval is based on user setting)
+	TimeSinceLastLog += DeltaTime;
+	if (TimeSinceLastLog >= LogInterval)
+	{
+		MainLogger();
+		TimeSinceLastLog = 0;
+	}
+
+	// Time since client entries are sent to the server 
+	TimeSinceLastSend += DeltaTime;
+	SendInterval = 33.0f;
+	if (TimeSinceLastSend >= SendInterval)
+	{
+		SendClientLogData();
+		TimeSinceLastSend = 0;
+	}
+}
+
+// Handles character movement based on player input
+void AThirdPersonCharacter::Move(const FInputActionValue& Value)
+{
+	// input is a Vector2D
+	FVector2D MovementVector = Value.Get<FVector2D>();
+
+	if (Controller != nullptr)
+	{
+		// find out  which way is forward
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		// get forward vector
+		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+		// get right vector 
+		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+		// add movement 
+		AddMovementInput(ForwardDirection, MovementVector.Y);
+		AddMovementInput(RightDirection, MovementVector.X);
+
+	}
+}
+
+// Handles character rotation based on player input
+void AThirdPersonCharacter::Look(const FInputActionValue& Value)
+{
+	// input is a Vector2D
+	FVector2D LookAxisVector = Value.Get<FVector2D>();
+
+	if (Controller != nullptr)
+	{
+		// add yaw and pitch input to controller
+		AddControllerYawInput(LookAxisVector.X);
+		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+// Function to move the character to a specific position
+void AThirdPersonCharacter::MoveToPosition(FVector TargetLocation)
+{
+	// Find the difference between targetlocation and current location
+	FVector Direction = TargetLocation - GetActorLocation();
+	Direction.Normalize();
+	// Move the character to the targeted location
+	AddMovementInput(Direction);
+	UE_LOG(LogTemplateCharacter, Log, TEXT("Auto Move to position: %f %f %f"), Direction.X, Direction.Y, Direction.Z);
+}
+
+// Client initiates process to recieve player IDs
 void AThirdPersonCharacter::ClientInvokeRPC()
 {
 	if(HasAuthority())
@@ -248,20 +316,22 @@ void AThirdPersonCharacter::ClientInvokeRPC()
 	GetIds();
 }
 
-// Server-side function implementation
+// Server-side function implementation to get player IDs
 void AThirdPersonCharacter::GetIds_Implementation()
 {
-    if (HasAuthority()) // Ensure this runs on the server
+    if (HasAuthority()) 
     {
         TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject());
         TArray<TSharedPtr<FJsonValue>> PlayersArray;
+
         // Get the player controller of the invoking client
         APlayerController* InvokingPlayerController = Cast<APlayerController>(GetController());
         bool bOtherPlayersFound = false;
         for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
         {
             APlayerController* PC = It->Get();
-            if (PC && PC != InvokingPlayerController) // Exclude the invoking player controller
+			// Exclude the invoking player controller
+            if (PC && PC != InvokingPlayerController) 
             {
                 UNetConnection* NetConnection = Cast<UNetConnection>(PC->Player);
                 if (NetConnection)
@@ -291,6 +361,7 @@ void AThirdPersonCharacter::GetIds_Implementation()
     }
 }
 
+// Client-side function to receive player IDs
 void AThirdPersonCharacter::PlayerRecIds_Implementation(const FString& JsonString)
 {
     TSharedPtr<FJsonObject> JsonObject;
@@ -325,6 +396,7 @@ void AThirdPersonCharacter::PlayerRecIds_Implementation(const FString& JsonStrin
     }
 }
 
+// After user presses a button to open a UI, they input some ID and click on the submit button, which executes this function
 void AThirdPersonCharacter::SubmitButton(const FString& PlayerInput)
 {
     if (HasAuthority()) // Checks if this is the server
@@ -338,6 +410,7 @@ void AThirdPersonCharacter::SubmitButton(const FString& PlayerInput)
     }
 }
 
+// Server-side function to handle player input
 void AThirdPersonCharacter::ServerHandlePlayerInput_Implementation(const FString& PlayerInput)
 {
     // Perform IP address validation
@@ -356,7 +429,9 @@ void AThirdPersonCharacter::ServerHandlePlayerInput_Implementation(const FString
 	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
 	{
 		APlayerController* PC = It->Get();
-		if (PC && PC != InvokingPlayerController)  // Exclude the invoking player controller
+
+		// Exclude the invoking player controller
+		if (PC && PC != InvokingPlayerController)  
 		{
 			UNetConnection* NetConnection = Cast<UNetConnection>(PC->Player);
 			if (NetConnection)
@@ -367,7 +442,8 @@ void AThirdPersonCharacter::ServerHandlePlayerInput_Implementation(const FString
 				if (ConnectedIPAddress.Equals(PlayerInput))
 				{
 					FString PlayerName = PC->PlayerState->GetPlayerName();
-					if (!PlayerName.Equals(InvokingPlayerName))  // Exclude player by name
+					// Exclude player by name
+					if (!PlayerName.Equals(InvokingPlayerName))  
 					{
 						TargetedPlayerController = PC;  
 						break;
@@ -377,19 +453,21 @@ void AThirdPersonCharacter::ServerHandlePlayerInput_Implementation(const FString
 		}
 	}
 
-
+	// if a controller is found to be the same as received player ID
 	if (TargetedPlayerController)
 	{        
-		//ClientNotifyValidInput(FString("Player with IP address found! Applied DoS attack!"));
 		AThirdPersonCharacter* TargetedCharacter = Cast<AThirdPersonCharacter>(TargetedPlayerController->GetPawn());
 		if (TargetedCharacter)
 		{
 			AThirdPersonGameMode* GameMode = Cast<AThirdPersonGameMode>(GetWorld()->GetAuthGameMode());
 			if (GameMode)
 			{
+				// Perfoprm the DoS attack
 				double duration = 5.0f;
 				GameMode->SimulateDoSAttack(TargetedPlayerController, 25, 95, duration);
 				DoS = true;
+
+				// Change server and client logging to be more rapid for the duration of the DoS attack
 				// SetServerLogInterval(1.0f);
 				// SetClientLogInterval(1.0f);
 				// GetWorld()->GetTimerManager().SetTimer(ClientTimerHandle, this, &AThirdPersonCharacter::RevertClientLogInterval, 10.0f, false);
@@ -407,13 +485,17 @@ void AThirdPersonCharacter::ServerHandlePlayerInput_Implementation(const FString
 	}
 }
 
+// Function that the server invokes on the targeted client 
 void AThirdPersonCharacter::Client_SetPacketLoss_Implementation(int OutLossRate, int InLossRate)
 {
-	if (OutLossRate != 0 || InLossRate != 0){
+	if (OutLossRate != 0 || InLossRate != 0)
+	{
 		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("Denial of Service atttack launched on you!")));
 	}
+
 	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("Packet loss rates set to %d%% (outgoing) and %d%% (incoming)"), OutLossRate, InLossRate));
-    if (APlayerController* PC = Cast<APlayerController>(GetController()))
+    
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
     {
         // Command to set outgoing packet loss
         FString Command = FString::Printf(TEXT("NetEmulation.PktLoss %d"), OutLossRate);
@@ -431,8 +513,7 @@ void AThirdPersonCharacter::Client_SetPacketLoss_Implementation(int OutLossRate,
     }
 }
 
-
-
+// Invoking client receives the message from the server whether or not the given player ID is valid or not
 void AThirdPersonCharacter::ClientNotifyValidInput_Implementation(const FString& Message)
 {
     if (Message == "Player with IP address found, message sent!" || Message == "Player with IP address found!" || Message == "Player with IP address found! Applied DoS attack!")
@@ -445,51 +526,7 @@ void AThirdPersonCharacter::ClientNotifyValidInput_Implementation(const FString&
     }
 }
 
-void AThirdPersonCharacter::TargetedClientReceiveMessage_Implementation(const FString& Message)
-{
-    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, Message);
-}
-
-void AThirdPersonCharacter::CallRunningService()
-{
-    FString Url = TEXT("http://localhost:5000/apply_delay");
-
-    TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();\
-
-	ArtDelay = true;
-	SetClientLogInterval(1.0f);
-	SetServerLogInterval(1.0f);
-	GetWorld()->GetTimerManager().SetTimer(ClientTimerHandle, this, &AThirdPersonCharacter::RevertClientLogInterval, 12.0f, false);
-	GetWorld()->GetTimerManager().SetTimer(ServerTimerHandle, this, &AThirdPersonCharacter::RevertServerLogInterval, 12.0f, false);
-
-	Request->OnProcessRequestComplete().BindUObject(this, &AThirdPersonCharacter::OnServiceResponseReceived);
-    Request->SetURL(Url);
-    Request->SetVerb("GET");
-    Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-    Request->ProcessRequest();
-}
-
-void AThirdPersonCharacter::OnServiceResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
-{
-    if (bWasSuccessful && Response.IsValid() && Response->GetResponseCode() == 200)
-    {
-        UE_LOG(LogTemp, Log, TEXT("Successfully applied delay"));
-    }
-    else
-    {
-        FString ErrorMessage = TEXT("Failed to apply delay");
-        if (Response.IsValid())
-        {
-            ErrorMessage += FString::Printf(TEXT(": %s"), *Response->GetContentAsString());
-        }
-        else if (!bWasSuccessful)
-        {
-            ErrorMessage += TEXT(": Request failed");
-        }
-        UE_LOG(LogTemp, Warning, TEXT("%s"), *ErrorMessage);
-    }
-}
-
+// Client side function to invoke Lag Switch attack 
 void AThirdPersonCharacter::LagSwitchFunc()
 {
 	LagSwitch = true;
@@ -500,14 +537,17 @@ void AThirdPersonCharacter::LagSwitchFunc()
 
 	if (APlayerController* PC = Cast<APlayerController>(GetController()))
 	{
+		// Console command to add delay
         FString Command = FString::Printf(TEXT("NetEmulation.PktLag 6000"));
         PC->ConsoleCommand(*Command);
 
+		// Set a timer to revert the lag switch before server starts receiving the delayed packets
 		FTimerHandle TimerHandle;
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AThirdPersonCharacter::RevertArtLag, 5.0f, false);
     }
 }
 
+// Client side function to invoke Fixed Delay attack
 void AThirdPersonCharacter::FixedDelayFunc()
 {
 	ArtDelay = true;
@@ -518,64 +558,33 @@ void AThirdPersonCharacter::FixedDelayFunc()
 
 	if (APlayerController* PC = Cast<APlayerController>(GetController()))
 	{
+		// Console command to add delay
         FString Command = FString::Printf(TEXT("NetEmulation.PktLag 4000"));
         PC->ConsoleCommand(*Command);
 
+		// Set a timer to revert the delay to normal transmission of packets
 		FTimerHandle TimerHandle;
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AThirdPersonCharacter::RevertArtLag, 10.0f, false);
     }
 }
 
-
+// Revert the Lag Switch attack and Fixed Delay attack
 void AThirdPersonCharacter::RevertArtLag()
 {
 	LagSwitch = false;
 	ArtDelay = false;
 	if (APlayerController* PC = Cast<APlayerController>(GetController()))
 	{
+		// Console command to turn off net emulation
 		FString Command = FString::Printf(TEXT("NetEmulation.Off"));
 		PC->ConsoleCommand(*Command);
 	}
 }
 
-
-void AThirdPersonCharacter::Move(const FInputActionValue& Value)
+// Update health if damaged 
+void AThirdPersonCharacter::OnRep_CurrentHealth()
 {
-	// input is a Vector2D
-	FVector2D MovementVector = Value.Get<FVector2D>();
-
-	if (Controller != nullptr)
-	{
-		// find out  which way is forward
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		// get forward vector
-		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-
-		// get right vector 
-		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-		// add movement 
-		AddMovementInput(ForwardDirection, MovementVector.Y);
-		AddMovementInput(RightDirection, MovementVector.X);
-
-		FVector PlayerLocation = GetActorLocation();
-
-		//UE_LOG(LogTemplateCharacter, Log, TEXT("Applying Movement: %f, %f, PLayer Location: %f %f"), MovementVector.X, MovementVector.Y, PlayerLocation.X, PlayerLocation.Y);
-	}
-}
-
-// Replicated Properties
-
-void AThirdPersonCharacter::GetLifetimeReplicatedProps(TArray <FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	//Replicate current health.
-	DOREPLIFETIME(AThirdPersonCharacter, CurrentHealth);
-	//Replicate current rotation. (activation of aimbot)
-	DOREPLIFETIME(AThirdPersonCharacter, ReplicatedRotation);
+	OnHealthUpdate();
 }
 
 void AThirdPersonCharacter::OnHealthUpdate()
@@ -583,17 +592,11 @@ void AThirdPersonCharacter::OnHealthUpdate()
 	//Client-specific functionality
 	if (IsLocallyControlled())
 	{
-		// FString healthMessage = FString::Printf(TEXT("You now have %f health remaining."), CurrentHealth);
-		// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, healthMessage);
-
 		if (CurrentHealth <= 0)
 		{
-			//FString deathMessage = FString::Printf(TEXT("You have been killed."));
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, deathMessage);
+			// Handle player death
 			FVector RespawnLocation = FVector(1950.00, 30, 322.15);
 			ServerRespawn(RespawnLocation);
-			//FString respawnMessage = FString::Printf(TEXT("You have respawned with full health"));
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Purple, respawnMessage);
 			SetActorRotation(FRotator(180, 0, 0));
 			SetActorRotation(FRotator(-90, 0, 0));
 		}
@@ -630,41 +633,8 @@ void AThirdPersonCharacter::ServerRespawn_Implementation(FVector NewLocation)
 		UE_LOG(LogTemplateCharacter, Log, TEXT("%s"), *respawnMessage);
     }
 }
-// void AThirdPersonCharacter::ServerPlayerDied_Implementation()
-// {
-//     // Handle server-specific logic here
-//     // Restart the level or perform any other server-specific actions
-//     // For example, you can call a function to restart the level on the server
 
-//     // RestartLevelOnServer();
-// }
-
-// Function to restart the level on the server
-// void AThirdPersonCharacter::RestartLevelOnServer()
-// {
-//     // Check if running on the server
-//     if (HasAuthority())
-//     {
-//         // Get the current world
-//         UWorld* World = GetWorld();
-
-//         if (World)
-//         {
-//             // Specify the map name to travel to
-//             FString MapName = "ThirdPersonMap";
-
-//             // Use ServerTravel to restart the level on the server
-//             World->ServerTravel(MapName);
-//         }
-//     }
-// }
-
-
-void AThirdPersonCharacter::OnRep_CurrentHealth()
-{
-	OnHealthUpdate();
-}
-
+// Function to set the current health of the character
 void AThirdPersonCharacter::SetCurrentHealth(float healthValue)
 {
 	if (GetLocalRole() == ROLE_Authority)
@@ -674,6 +644,7 @@ void AThirdPersonCharacter::SetCurrentHealth(float healthValue)
 	}
 }
 
+// Function to handle the damage taken by the character
 float AThirdPersonCharacter::TakeDamage(float DamageTaken, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	float damageApplied = CurrentHealth - DamageTaken;
@@ -681,251 +652,7 @@ float AThirdPersonCharacter::TakeDamage(float DamageTaken, struct FDamageEvent c
 	return damageApplied;
 }
 
-void AThirdPersonCharacter::MoveToPosition(FVector TargetLocation)
-{
-	// FVector CurrentLocation = GetActorLocation();
-	FVector Direction = TargetLocation - GetActorLocation();
-	Direction.Normalize();
-	AddMovementInput(Direction);
-	//FollowCamera->SetWorldRotation(FRotator(0, 90, 0));
-	//CameraBoom->SetWorldLocation(GetActorLocation()); // not realy sure for the camera, look into cameraboom if we want somthing specific for the cam
-	UE_LOG(LogTemplateCharacter, Log, TEXT("Auto Move to position: %f %f %f"), Direction.X, Direction.Y, Direction.Z);
-	//FRotator NewControlRotation = Direction.Rotation(); // Convert direction to rotation
-	//NewControlRotation.Pitch = 0; // Keep the pitch level (no up/down tilt)
-	//NewControlRotation.Roll = 0; // Keep the roll level (no tilt)
-	//if (AController* Controller = GetController())
-	//{
-	//	Controller->SetControlRotation(NewControlRotation); // Set the controller rotation to face the direction
-	//}
-}
-
-
-void AThirdPersonCharacter::Look(const FInputActionValue& Value)
-{
-	// input is a Vector2D
-	FVector2D LookAxisVector = Value.Get<FVector2D>();
-
-	if (Controller != nullptr)
-	{
-		// add yaw and pitch input to controller
-		AddControllerYawInput(LookAxisVector.X);
-		AddControllerPitchInput(LookAxisVector.Y);
-	}
-}
-
-
-void AThirdPersonCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	// Call SetLogPaths() only once
-	if (!bHasSetLogPaths)
-	{
-		SetLogPaths();
-		bHasSetLogPaths = true;
-		if (HasAuthority()) 
-		{
-			// if (FParse::Value(FCommandLine::Get(), TEXT("ServerLog="), ServerPath, true)) {
-			// 	FullServerFilePath = FPaths::Combine(TEXT("../../Logs/"), ServerPath + TEXT("_") + CurrentTime + TEXT(".txt"));
-			// }
-			if (FParse::Param(FCommandLine::Get(), TEXT("mainServerLog"))) {
-				MainServerPath = FPaths::Combine(TEXT("../../Logs/"), *PlayerNameForServerLog + FString(TEXT(".json")));
-			}
-		}
-		else {
-			// if (FParse::Value(FCommandLine::Get(), TEXT("ClientLog="), ClientPath, true)) {
-			// 	FullClientFilePath = FPaths::Combine(TEXT("../../Logs/"), ClientPath + TEXT("_") + CurrentTime + TEXT(".txt"));
-			// }
-			if (FParse::Param(FCommandLine::Get(), TEXT("mainClientLog"))) {
-				MainClientPath = FPaths::Combine(TEXT("../../Logs/"), *PlayerNameForClientLog + FString(TEXT(".json")));
-			}
-		}
-	}
-
-	FVector CurrentLocation = GetActorLocation();
-
-	uint64 CurrentFrameNumber = GFrameCounter;
-
-	UWorld* World = GetWorld();
-	FVector PlayerLocation = GetActorLocation();
-
-	double timeSeconds;
-
-	FString LocationString = FString::Printf(TEXT("Current Location: X=%.2f Y=%.2f Z=%.2f"), CurrentLocation.X, CurrentLocation.Y, CurrentLocation.Z);
-    //GEngine->AddOnScreenDebugMessage(1, 0.f, FColor::Yellow, LocationString);
-	
-	//UE_LOG(LogTemplateCharacter, Log, TEXT("Current Location: X=%.2f Y=%.2f Z=%.2f"), CurrentLocation.X, CurrentLocation.Y, CurrentLocation.Z);
-
-	if (World)
-	{
-		timeSeconds = World->GetTimeSeconds();
-		auto currentTime = std::chrono::system_clock::now();
-		auto durationSinceEpoch = currentTime.time_since_epoch();
-		auto seconds = std::chrono::duration_cast<std::chrono::seconds>(durationSinceEpoch);
-		auto nanoseconds = durationSinceEpoch - seconds;
-
-		long long int totalSeconds = seconds.count();
-		long long int totalNanoseconds = nanoseconds.count();
-
-
-		UE_LOG(LogTemplateCharacter, Verbose, TEXT("time: %lld"), currentTime);
-
-		//if (GetLocalRole() == ROLE_Authority)
-		// {
-		// 	LogMovement();
-		// }
-
-		// if (HasAuthority())
-		// {
-		// 	WriteMovementDataToJson(FullServerFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber, totalSeconds, totalNanoseconds);
-		// }
-		// else {
-		// 	WriteMovementDataToJson(FullClientFilePath, PlayerLocation, timeSeconds, CurrentFrameNumber, totalSeconds, totalNanoseconds);
-		// }
-	}
-	else return;
-
-	// auto moves
-	FVector Vector;
-	Vector = Scenario.GetMove(timeSeconds, CurrentLocation);
-
-	// not move when vector at 0		
-	// if vector is zero, send one last move to the last position
-	if (!Vector.IsZero())
-	{
-		MoveToPosition(Vector);
-	}
-	//bool shootDone = false;
-	//if (AController* Controller = GetController())
-	//{
-	//	shootDone = Scenario.HandleShooting(timeSeconds, Cast<APlayerController>(Controller));
-	//}
-	//ClientSendTime();
-
-	// if(HasAuthority())
-	// {
-	// 	UE_LOG(LogTemplateCharacter, Log, TEXT("Server Time: %f"), New_Time);
-	// }
-	// else
-	// {
-	// 	UE_LOG(LogTemplateCharacter, Log, TEXT("Client Time: %f"), New_Time);
-	// }
-
-	TimeSinceLastLog += DeltaTime;
-	if (TimeSinceLastLog >= LogInterval)
-	{
-		MainLogger();
-		TimeSinceLastLog = 0;
-	}
-
-	TimeSinceLastSend += DeltaTime;
-	SendInterval = 33.0f;
-	if (TimeSinceLastSend >= SendInterval)
-	{
-		SendClientLogData();
-		TimeSinceLastSend = 0;
-	}
-}
-
-// void AThirdPersonCharacter::ClientSendTime()
-// {
-// 	double time = GetWorld()->GetTimeSeconds();
-// 	ServerReceiveTime(time);
-// }
-
-// void AThirdPersonCharacter::ServerReceiveTime_Implementation(double time)
-// {
-// 	ClientTime = time;
-// }
-
-void AThirdPersonCharacter::SendClientLogData()
-{
-    if (HasAuthority())
-    {
-        return;
-    }
-
-    FString FilePath = MainClientPath;
-
-    if (FilePath.IsEmpty())
-    {
-        UE_LOG(LogTemp, Error, TEXT("Client log file path is empty!"));
-        return;
-    }
-
-    FString FilePathString = FilePath;
-
-    FString FileContent;
-    FFileHelper::LoadFileToString(FileContent, *FilePathString);
-
-    if (FileContent.IsEmpty())
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Client log file is empty, nothing to send."));
-        return;
-    }
-
-    ServerReceiveLogData(FileContent);
-
-    FFileHelper::SaveStringToFile(TEXT(""), *FilePathString);
-    UE_LOG(LogTemp, Log, TEXT("Client log file content reset."));
-}
-
-void AThirdPersonCharacter::ServerReceiveLogData_Implementation(const FString& LogData)
-{
-    FString FilePath = MainServerPath;
-
-    if (FilePath.IsEmpty())
-    {
-        UE_LOG(LogTemp, Error, TEXT("Server log file path is empty!"));
-        return;
-    }
-
-    FString FilePathString = FilePath;
-
-    FString FileContent;
-    FFileHelper::LoadFileToString(FileContent, *FilePathString);
-
-    TArray<TSharedPtr<FJsonValue>> JsonArray;
-    if (!FileContent.IsEmpty())
-    {
-        TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(FileContent);
-        FJsonSerializer::Deserialize(Reader, JsonArray);
-    }
-
-    TArray<TSharedPtr<FJsonValue>> ClientJsonArray;
-    TSharedRef<TJsonReader<>> ClientReader = TJsonReaderFactory<>::Create(LogData);
-    FJsonSerializer::Deserialize(ClientReader, ClientJsonArray);
-
-    // Merge client data with server data
-    for (auto& ClientJson : ClientJsonArray)
-    {
-        JsonArray.Add(ClientJson);
-    }
-
-    // Sort the array based on the "Time" field
-    JsonArray.Sort([](const TSharedPtr<FJsonValue>& A, const TSharedPtr<FJsonValue>& B) {
-        double TimeA = A->AsObject()->GetNumberField(TEXT("Time"));
-        double TimeB = B->AsObject()->GetNumberField(TEXT("Time"));
-        return TimeA < TimeB;
-    });
-
-    // Write the sorted array back to the file
-    FString OutputString;
-    TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
-    FJsonSerializer::Serialize(JsonArray, Writer);
-
-    FFileHelper::SaveStringToFile(OutputString, *FilePathString);
-    UE_LOG(LogTemp, Log, TEXT("Data successfully written to server log file: %s"), *FilePath);
-}
-
-void AThirdPersonCharacter::LogMovement()
-{
-    FVector CurrentLocation = GetActorLocation();
-    UE_LOG(LogTemplateCharacter, Log, TEXT("Player %s moved to %s"),
-           *GetPlayerIdentifier(), *CurrentLocation.ToString());
-}
-
-
+// Projectile weapon firing
 void AThirdPersonCharacter::StartFire()
     {
         if (!bIsFiringWeapon)
@@ -940,11 +667,13 @@ void AThirdPersonCharacter::StartFire()
         }
     }
 
+// Stop firing the projectile weapon
 void AThirdPersonCharacter::StopFire()
 {
 	bIsFiringWeapon = false;
 }
 
+// Function to handle the firing of the projectile (server side)
 void AThirdPersonCharacter::HandleFire_Implementation(const FVector& spawnLocation, const FRotator& spawnRotation)
 {
 	FActorSpawnParameters spawnParameters;
@@ -955,32 +684,7 @@ void AThirdPersonCharacter::HandleFire_Implementation(const FVector& spawnLocati
 
 }
 
-
-void AThirdPersonCharacter::WriteMovementDataToJson(const FString& FilePath, const FVector& PlayerLocation, double TimeSeconds, uint64 FrameNumber, long long int TimeSec, long long int TimeNano)
-{
-	// Create a JSON object to store movement data
-	TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
-
-	// Add movement data to the JSON object
-	JsonObject->SetNumberField(TEXT("PlayerLocationX"), PlayerLocation.X);
-	JsonObject->SetNumberField(TEXT("PlayerLocationY"), PlayerLocation.Y);
-	JsonObject->SetNumberField(TEXT("Time"), TimeSeconds);
-	JsonObject->SetNumberField(TEXT("TimeSec"), TimeSec);
-	JsonObject->SetNumberField(TEXT("TimeNano"), TimeNano);
-	JsonObject->SetNumberField(TEXT("FrameNumber"), FrameNumber);
-	// Convert JSON object to string
-	FString JsonString;
-	TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&JsonString);
-	FJsonSerializer::Serialize(JsonObject.ToSharedRef(), JsonWriter);
-
-	//UE_LOG(LogTemplateCharacter, Log, TEXT("JsonString: %s"), *JsonString);
-
-	// Write the JSON string to the file
-	std::ofstream MyFile(TCHAR_TO_UTF8(*FilePath), std::ios::app);
-	MyFile << TCHAR_TO_UTF8(*JsonString);
-	MyFile.close();
-}
-
+// Function to handle the firing of the hitscan weapon (client side)
 void AThirdPersonCharacter::FireHitScanWeapon()
 {
     FVector SpawnLocation = GetActorLocation() + (GetActorRotation().Vector() * 90.0f) + (GetActorUpVector() * 62.0f);
@@ -1033,6 +737,7 @@ bool AThirdPersonCharacter::ServerValidateHitScanDamage_Validate(AActor* HitActo
     return true;
 }
 
+// Apply damage to the hit actor
 void AThirdPersonCharacter::ServerValidateHitScanDamage_Implementation(AActor* HitActor, FVector_NetQuantize HitLocation)
 {
     // This function runs on the server
@@ -1046,21 +751,9 @@ void AThirdPersonCharacter::ServerValidateHitScanDamage_Implementation(AActor* H
     }
 }
 
-void AThirdPersonCharacter::OnRep_ReplicatedRotation()
-{
-    SetActorRotation(ReplicatedRotation);
-
-    if (AController* Controller = GetController())
-    {
-        FRotator ControlRotation = Controller->GetControlRotation();
-        ControlRotation.Yaw = ReplicatedRotation.Yaw;
-        Controller->SetControlRotation(ControlRotation);
-    }
-}
-
+// Initiates the aimbot process
 void AThirdPersonCharacter::Aimbot()
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Aimbot activated!"));
     // Start the aimbot process
     GetWorldTimerManager().SetTimer(AimbotTickTimerHandle, this, &AThirdPersonCharacter::AimbotTick, 0.016f, true);
 
@@ -1068,6 +761,7 @@ void AThirdPersonCharacter::Aimbot()
     GetWorldTimerManager().SetTimer(AimbotStopTimerHandle, this, &AThirdPersonCharacter::StopAimbot, AimbotDuration, false);
 }
 
+// Aimbot process
 void AThirdPersonCharacter::AimbotTick()
 {
     FindTargetInFOV();
@@ -1077,6 +771,7 @@ void AThirdPersonCharacter::AimbotTick()
     }
 }
 
+// Find the target in the field of view
 void AThirdPersonCharacter::FindTargetInFOV()
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Finding target in FOV!"));
@@ -1121,6 +816,7 @@ void AThirdPersonCharacter::FindTargetInFOV()
     }
 }
 
+// Aim at the target
 void AThirdPersonCharacter::AimAtTarget()
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Aiming at target!"));
@@ -1146,6 +842,7 @@ void AThirdPersonCharacter::AimAtTarget()
 
 }
 
+// Set the rotation of the character 
 void AThirdPersonCharacter::SetRotation(FRotator NewRotation)
 {
     // Update rotation on the server
@@ -1156,11 +853,13 @@ void AThirdPersonCharacter::SetRotation(FRotator NewRotation)
     NetMulticastSetRotation(NewRotation);
 }
 
+// Server-side function to set the rotation of the character
 void AThirdPersonCharacter::ServerSetRotation_Implementation(FRotator NewRotation)
 {
 	SetRotation(NewRotation);
 }
 
+// Multicast function to set the rotation of the character at all client instances
 void AThirdPersonCharacter::NetMulticastSetRotation_Implementation(FRotator NewRotation)
 {
     if (!HasAuthority())
@@ -1169,6 +868,20 @@ void AThirdPersonCharacter::NetMulticastSetRotation_Implementation(FRotator NewR
     }
 }
 
+// Replicated rotation function
+void AThirdPersonCharacter::OnRep_ReplicatedRotation()
+{
+    SetActorRotation(ReplicatedRotation);
+
+    if (AController* Controller = GetController())
+    {
+        FRotator ControlRotation = Controller->GetControlRotation();
+        ControlRotation.Yaw = ReplicatedRotation.Yaw;
+        Controller->SetControlRotation(ControlRotation);
+    }
+}
+
+// Stop the aimbot process
 void AThirdPersonCharacter::StopAimbot()
 {
     // Clear the timer on the client
@@ -1176,6 +889,49 @@ void AThirdPersonCharacter::StopAimbot()
 	ClosestEnemy = nullptr;
 }
 
+// Function to call the running service in the background (if set)
+void AThirdPersonCharacter::CallRunningService()
+{
+    FString Url = TEXT("http://localhost:5000/apply_delay");
+
+    TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();\
+
+	// change global variable based on what attack the script is executing
+	ArtDelay = true;
+	SetClientLogInterval(1.0f);
+	SetServerLogInterval(1.0f);
+	GetWorld()->GetTimerManager().SetTimer(ClientTimerHandle, this, &AThirdPersonCharacter::RevertClientLogInterval, 12.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(ServerTimerHandle, this, &AThirdPersonCharacter::RevertServerLogInterval, 12.0f, false);
+
+	Request->OnProcessRequestComplete().BindUObject(this, &AThirdPersonCharacter::OnServiceResponseReceived);
+    Request->SetURL(Url);
+    Request->SetVerb("GET");
+    Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+    Request->ProcessRequest();
+}
+
+void AThirdPersonCharacter::OnServiceResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
+    if (bWasSuccessful && Response.IsValid() && Response->GetResponseCode() == 200)
+    {
+        UE_LOG(LogTemp, Log, TEXT("Successfully applied delay"));
+    }
+    else
+    {
+        FString ErrorMessage = TEXT("Failed to apply delay");
+        if (Response.IsValid())
+        {
+            ErrorMessage += FString::Printf(TEXT(": %s"), *Response->GetContentAsString());
+        }
+        else if (!bWasSuccessful)
+        {
+            ErrorMessage += TEXT(": Request failed");
+        }
+        UE_LOG(LogTemp, Warning, TEXT("%s"), *ErrorMessage);
+    }
+}
+
+// Main logger function
 void AThirdPersonCharacter::MainLogger()
 {
 	double Time = HasAuthority() ? GetWorld()->GetTimeSeconds() - SpawnTime : GetWorld()->GetTimeSeconds();
@@ -1229,7 +985,6 @@ void AThirdPersonCharacter::MainLogger()
 		JsonObject->SetStringField(TEXT("VIS.AIM"), TEXT("ON"));
 	}
 
-
     FString JsonString;
     TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&JsonString);
     FJsonSerializer::Serialize(JsonObject.ToSharedRef(), JsonWriter);
@@ -1254,7 +1009,89 @@ void AThirdPersonCharacter::MainLogger()
     UE_LOG(LogTemp, Log, TEXT("Data successfully written to file: %s"), *FilePath);
 }
 
+// Function to send client data periodically to the server
+void AThirdPersonCharacter::SendClientLogData()
+{
+    if (HasAuthority())
+    {
+        return;
+    }
 
+    FString FilePath = MainClientPath;
+
+    if (FilePath.IsEmpty())
+    {
+        UE_LOG(LogTemp, Error, TEXT("Client log file path is empty!"));
+        return;
+    }
+
+    FString FilePathString = FilePath;
+
+    FString FileContent;
+    FFileHelper::LoadFileToString(FileContent, *FilePathString);
+
+    if (FileContent.IsEmpty())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Client log file is empty, nothing to send."));
+        return;
+    }
+
+    ServerReceiveLogData(FileContent);
+
+    FFileHelper::SaveStringToFile(TEXT(""), *FilePathString);
+    UE_LOG(LogTemp, Log, TEXT("Client log file content reset."));
+}
+
+// Server-side function to receive client data
+void AThirdPersonCharacter::ServerReceiveLogData_Implementation(const FString& LogData)
+{
+    FString FilePath = MainServerPath;
+
+    if (FilePath.IsEmpty())
+    {
+        UE_LOG(LogTemp, Error, TEXT("Server log file path is empty!"));
+        return;
+    }
+
+    FString FilePathString = FilePath;
+
+    FString FileContent;
+    FFileHelper::LoadFileToString(FileContent, *FilePathString);
+
+    TArray<TSharedPtr<FJsonValue>> JsonArray;
+    if (!FileContent.IsEmpty())
+    {
+        TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(FileContent);
+        FJsonSerializer::Deserialize(Reader, JsonArray);
+    }
+
+    TArray<TSharedPtr<FJsonValue>> ClientJsonArray;
+    TSharedRef<TJsonReader<>> ClientReader = TJsonReaderFactory<>::Create(LogData);
+    FJsonSerializer::Deserialize(ClientReader, ClientJsonArray);
+
+    // Merge client data with server data
+    for (auto& ClientJson : ClientJsonArray)
+    {
+        JsonArray.Add(ClientJson);
+    }
+
+    // Sort the array based on the "Time" field
+    JsonArray.Sort([](const TSharedPtr<FJsonValue>& A, const TSharedPtr<FJsonValue>& B) {
+        double TimeA = A->AsObject()->GetNumberField(TEXT("Time"));
+        double TimeB = B->AsObject()->GetNumberField(TEXT("Time"));
+        return TimeA < TimeB;
+    });
+
+    // Write the sorted array back to the file
+    FString OutputString;
+    TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
+    FJsonSerializer::Serialize(JsonArray, Writer);
+
+    FFileHelper::SaveStringToFile(OutputString, *FilePathString);
+    UE_LOG(LogTemp, Log, TEXT("Data successfully written to server log file: %s"), *FilePath);
+}
+
+// Get player's identifier 
 FString AThirdPersonCharacter::GetPlayerIdentifier() const
 {
     APlayerController* Player = GetController<APlayerController>();
@@ -1269,11 +1106,13 @@ FString AThirdPersonCharacter::GetPlayerIdentifier() const
     return FString(TEXT("Unknown"));
 }
 
+// Set the client log interval when attack is active
 void AThirdPersonCharacter::SetClientLogInterval(double ClientTime)
 {
 	LogInterval = ClientTime;
 }
 
+// Revert the client log interval when attack is inactive
 void AThirdPersonCharacter::RevertClientLogInterval()
 {
 	LagSwitch = false;
@@ -1284,6 +1123,7 @@ void AThirdPersonCharacter::RevertClientLogInterval()
 	SetClientLogInterval(10.0f);
 }
 
+// Set the server log interval when attack is active
 void AThirdPersonCharacter::SetServerLogInterval_Implementation(double ServerTime)
 {
 	if(HasAuthority())
@@ -1292,14 +1132,16 @@ void AThirdPersonCharacter::SetServerLogInterval_Implementation(double ServerTim
 	}
 }
 
+// Revert the server log interval when attack is inactive
 void AThirdPersonCharacter::RevertServerLogInterval_Implementation()
 {
 	if(HasAuthority())
 	{
-		SetServerLogInterval(30.0f);
+		SetServerLogInterval(10.0f);
 	}
 }
 
+// Set the log paths for the server and client
 void AThirdPersonCharacter::SetLogPaths()
 {
 	PlayerNameForServerLog = GetPlayerIdentifier();

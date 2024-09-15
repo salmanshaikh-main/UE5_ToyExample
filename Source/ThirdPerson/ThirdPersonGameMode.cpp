@@ -5,7 +5,6 @@
 #include "GameFramework/PlayerState.h"
 #include "GameFramework/GameSession.h"
 #include "Engine/Engine.h"
-#include "CustomPlayerController.h"
 
 DEFINE_LOG_CATEGORY(LogThirdPersonGameMode);
 
@@ -17,24 +16,6 @@ AThirdPersonGameMode::AThirdPersonGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
-
-	/////// Surement ca qui fait planter
-	//for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
-	//{
-	//	APlayerController* PlayerController = It->Get();
-
-	//	if (PlayerController)
-	//	{
-	//		FString NetworkAddr = PlayerController->GetPlayerNetworkAddress();
-	//		UE_LOG(LogThirdPersonGameMode, Log, TEXT("Network address: %s"), &NetworkAddr);
-	//	}
-	//	else
-	//	{
-	//		UE_LOG(LogThirdPersonGameMode, Log, TEXT("PlayerController = NULL"));
-
-	//	}
-	//}
-
 }
 
 void AThirdPersonGameMode::PostLogin(APlayerController* NewPlayer)
