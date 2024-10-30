@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "ThirdPersonProjectile.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -9,7 +8,6 @@
 #include "Particles/ParticleSystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
-
 
 // Sets default values
 AThirdPersonProjectile::AThirdPersonProjectile()
@@ -66,7 +64,6 @@ AThirdPersonProjectile::AThirdPersonProjectile()
 void AThirdPersonProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -87,14 +84,18 @@ void AThirdPersonProjectile::OnProjectileImpact(UPrimitiveComponent* HitComponen
     if (OtherActor)
     {
         ImpactedActor = OtherActor;
-        ImpactedLocation = Hit.ImpactPoint;  // Use Hit.ImpactPoint to get the location of the impact
+
+        // Use Hit.ImpactPoint to get the location of the impact
+        ImpactedLocation = Hit.ImpactPoint; 
         UGameplayStatics::ApplyPointDamage(OtherActor, Damage, NormalImpulse, Hit, GetInstigator()->Controller, this, DamageType);
         
+        // Log the impacted actor and location if the actor is the server.
         if (GetLocalRole() == ROLE_Authority)
         {
             UE_LOG(LogTemp, Log, TEXT("Projectile impacted actor: %s at location: %s"), *OtherActor->GetName(), *ImpactedLocation.ToString());
         }
     }
 
+    // Destroy the projectile after it impacts against another object.
     Destroy();
 }

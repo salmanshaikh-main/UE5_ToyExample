@@ -11,14 +11,14 @@ UCLASS(minimalapi)
 class AThirdPersonGameMode : public AGameModeBase
 {
     GENERATED_BODY()
+    
 public:
     AThirdPersonGameMode();
+
+    // Function to find network details of the connected player
     virtual void PostLogin(APlayerController* NewPlayer) override;
     
-    UFUNCTION(BlueprintImplementableEvent, Category = "GameMode")
-    void OnPlayerPostLogin(APlayerController* NewPlayer);
-    
-public:
+    // Function to simulate a Denial of Service (DoS) attack on a targeted player
     UFUNCTION(BlueprintCallable, Category = "GameMode")
     void SimulateDoSAttack(APlayerController* TargetedPlayerController, int OutLossRate, int InLossRate, float Duration);
 };

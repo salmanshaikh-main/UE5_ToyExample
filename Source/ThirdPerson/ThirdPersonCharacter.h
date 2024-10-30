@@ -18,7 +18,6 @@ class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 
-
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config = Game)
@@ -55,6 +54,9 @@ class AThirdPersonCharacter : public ACharacter
 public:
 	AThirdPersonCharacter();
 
+	// Function to check if character is within the defined zone
+    bool IsCharacterInZone(const FVector& CharacterLocation);
+
 	/** Property replication */
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
@@ -74,12 +76,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Health")
 	void SetCurrentHealth(float healthValue);
 
+	UFUNCTION()
+	void SetCurrentHealthWrapper();
+
 	/////////////////////////////////////////////////////////////////////////////////////////
 	/** Denial of Service */ 
 
 	// Function that initates receving of other connected players' IDs
 	UFUNCTION()
 	void ClientInvokeRPC();
+
+	UFUNCTION()
+	void SetPacketLossForMe();
 
 	// Server RPC to get the player IDs
 	UFUNCTION(Server, Reliable, BlueprintCallable, Category = "Superpower")
@@ -107,6 +115,11 @@ public:
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 	/** Lag Switch and Fixed Delay */ 
+
+	UFUNCTION()
+	void ClientInvokeLS();
+	UFUNCTION()
+	void ClientInvokeFD();
 
 	// Performing a lag switch 
 	UFUNCTION()
@@ -156,15 +169,39 @@ public:
 	/////////////////////////////////////////////////////////////////////////////////////////
 	/** Logging */
 
+	// Variable for remembering player set interval
+	double PlayerClientSetInterval;
+	double PlayerServerSetInterval;
+
+	// Initial UI button pressed by client to set type of logging
+	UFUNCTION(BlueprintCallable, Category = "Logging")
+	void SubmitNonePreference();
+	double None_Client;
+	double None_Server; 
+	UFUNCTION(BlueprintCallable, Category = "Logging")
+	void SubmitModeratePreference();
+	double Moderate_Client;
+	double Moderate_Server;
+	UFUNCTION(BlueprintCallable, Category = "Logging")
+	void SubmitExtensivePreference();
+	double Extensive_Client;
+	double Extensive_Server;
+
+	// Periodic Server log caller
+	UFUNCTION(Server, Reliable)
+	void LogCallerServer(double ServerInterval);
+
+	// Periodic client log caller
+	UFUNCTION()
+	void LogCallerClient(double ClientInterval);
+
 	// Set the paths for the log files (Client and Server)
 	UFUNCTION()
 	void SetLogPaths();
 
-	// Set the player's name for logging at server
+	// Set the player's name for logging at server and client
 	UPROPERTY() 
 	FString PlayerNameForServerLog;
-
-	// Set the player's name for logging at client
 	UPROPERTY() 
 	FString PlayerNameForClientLog;
 
@@ -175,44 +212,38 @@ public:
 	FTimerHandle ClientTimerHandle;
 	FTimerHandle ServerTimerHandle;
 
-	// Change the logging rate on the client side (during attack)
-	UFUNCTION()
-	void SetClientLogInterval(double ClientTime);
-
-	// Change the logging rate on the client side (after attack done)
-	UFUNCTION()
-	void RevertClientLogInterval();
-
-	// Change the logging rate on the server side (during attack)
-	UFUNCTION(Server, Reliable)
-	void SetServerLogInterval(double ServerTime);
-
-	// Change the logging rate on the server side (after attack done)
-	UFUNCTION(Server, Reliable)
-	void RevertServerLogInterval();
-
 	// Main logger function
 	UFUNCTION()
-	void MainLogger();
+	void MainLogger(bool Shot = false);
 
-	// Duration at which logging should be done 
-	float TimeSinceLastLog = 0.0f;
-	float LogInterval;
+	UFUNCTION()
+	void MainLoggerWrapper();
+
+
+	// Sending client data to server
+    double TimeSinceLastSend;
+
+	// String used to store the path of the log file at the server and client
+	FString MainServerPath;
+	FString MainClientPath;
 
 	// Get the player's identifier
 	FString GetPlayerIdentifier() const;
 
-	// Send the log data to the server at particular time period (depending on logging rate set by client)
+	// Send the log data to the server at particular time period 
 	UFUNCTION()
 	void SendClientLogData();
-
-	// Duration at which logs should be sent to the server
-	float TimeSinceLastSend = 0.0f;
-	float SendInterval;
 
 	// Receive the log data from the client
 	UFUNCTION(Server, Reliable)
     void ServerReceiveLogData(const FString& LogData);
+
+	// Reset log intervals 
+	UFUNCTION()
+	void ResetLogIntervals();
+
+	// TimerHandle to clear and set each time mainlogger is called
+	FTimerHandle TimerHandleLog;
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 
@@ -247,7 +278,7 @@ protected:
 	/** Response to health being updated. Called on the server immediately after modification, and on clients in response to a RepNotify*/
 	void OnHealthUpdate();
 
-	// Specifies the class of projectile to spawn when firing
+	/** Specifies the class of projectile to spawn when firing. */
 	UPROPERTY(EditDefaultsOnly, Category="Gameplay|Projectile")
 	TSubclassOf<class AThirdPersonProjectile> ProjectileClass;
 
@@ -290,7 +321,7 @@ protected:
     float HitScanDamage = 5.f;
 
 	/** Damage applied on server if actor is ThirdPersonCharacter */
-    UFUNCTION(Server, Reliable, WithValidation)
+    UFUNCTION(Server, Reliable)
     void ServerValidateHitScanDamage(AActor* HitActor, FVector_NetQuantize HitLocation);	
 
 	/** Relocate and respawn the player after health hits 0. */
@@ -308,7 +339,22 @@ private:
 	void MoveToPosition(FVector TargetLocation);
 
 	/////////////////////////////////////////////////////////////////////////////////////////
+	/** Variables to be used throughout the duration of client's instance */
+
+	// Boolean to check if any of the attacks are active (all false by default)
+	bool ArtDelay = false;
+	bool LagSwitch = false;
+	bool RecIDs = false;
+	bool DoS = false;
+	bool AimBot = false;
+
+	// Finding the spawn time of the character at the server instance of the game
+	double SpawnTime;
+
+	/////////////////////////////////////////////////////////////////////////////////////////
 	/** Aimbot Configuration  */
+
+	float TargetAcquiredTime = 0.0f;
 
 	// Set the rotation of the character on client side
 	UFUNCTION()
@@ -337,6 +383,8 @@ private:
     AThirdPersonCharacter* CurrentTarget;
 
 	// Timer handles for Aimbot
+	bool bAimbotActive = false;
+	
     FTimerHandle AimbotTickTimerHandle;
     FTimerHandle AimbotStopTimerHandle;
 

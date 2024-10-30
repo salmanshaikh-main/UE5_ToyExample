@@ -49,6 +49,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	// Variables to store the actor that was impacted and the location of the impact
 	AActor* ImpactedActor;
     FVector ImpactedLocation;
 };
