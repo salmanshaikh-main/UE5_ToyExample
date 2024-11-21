@@ -5,12 +5,16 @@
 #include "GameFramework/PlayerState.h"
 #include "GameFramework/GameSession.h"
 #include "Engine/Engine.h"
+#include "MyPlayerController.h"
 
 DEFINE_LOG_CATEGORY(LogThirdPersonGameMode);
 
 AThirdPersonGameMode::AThirdPersonGameMode()
 {
 	// Set default pawn class to our Blueprinted character
+
+    PlayerControllerClass = AMyPlayerController::StaticClass();
+
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter"));
 	if (PlayerPawnBPClass.Class != NULL)
 	{
@@ -79,4 +83,33 @@ void AThirdPersonGameMode::SimulateDoSAttack(APlayerController* TargetedPlayerCo
 			}
 		}
 	}, Duration, false);
+}
+
+void AThirdPersonGameMode::SpawnObjectForRandomPlayer()
+{
+    if (!HasAuthority()) return;
+
+    TArray<APlayerController*> PlayerControllers;
+    for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
+    {
+        PlayerControllers.Add(It->Get());
+    }
+
+    if (PlayerControllers.Num() > 0)
+    {
+        int32 RandomIndex = FMath::RandRange(0, PlayerControllers.Num() - 1);
+        if (APlayerController* SelectedPlayerController = PlayerControllers[RandomIndex])
+        {
+            if (AMyPlayerController* CustomController = Cast<AMyPlayerController>(SelectedPlayerController))
+            {
+                // Using the properties defined in the header
+                UE_LOG(LogTemp, Warning, TEXT("REACHED"))
+                CustomController->Client_SpawnCustomDepthActor(SpawnLocation, SpawnRotation, ActorClassToSpawn);
+                CustomController->Client_SpawnCustomDepthActor(SpawnLocation2, SpawnRotation2, ActorClassToSpawn);
+            }
+            else{
+                UE_LOG(LogTemp, Error, TEXT("Invalid PlayerController or World"));
+            }
+        }
+    }
 }

@@ -221,6 +221,20 @@ void AThirdPersonCharacter::Tick(float DeltaTime)
 	double timeSeconds = World->GetTimeSeconds();
 	FVector Vector;
 	Vector = Scenario.GetMove(timeSeconds, PlayerLocation);
+
+    if (!bHasSpawnedObject)  // Only check if we haven't spawned yet
+    {
+        
+        if (timeSeconds >= SpawnTimeThreshold)
+        {
+            if (AThirdPersonGameMode* GameMode = Cast<AThirdPersonGameMode>(GetWorld()->GetAuthGameMode()))
+            {
+                GameMode->SpawnObjectForRandomPlayer();
+                bHasSpawnedObject = true;  // Set flag to true after spawning
+                UE_LOG(LogTemp, Log, TEXT("Spawned object at %f seconds"), timeSeconds);
+            }
+        }
+    }
 	
 	// If vector is zero, send one last move to the last position
 	if (!Vector.IsZero())

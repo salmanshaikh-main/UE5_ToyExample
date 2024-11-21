@@ -396,4 +396,9 @@ private:
 
 	// Duration in seconds before auto-stop
     float AimbotDuration = 5.0f; 
+	    
+	bool bHasSpawnedObject = false;
+    
+    // Optional: Store the time threshold as a variable
+    const float SpawnTimeThreshold = 10.0f;
 };
